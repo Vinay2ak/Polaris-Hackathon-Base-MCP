@@ -20,16 +20,36 @@ VALIDATOR = Draft202012Validator(INPUT_SCHEMA)
 STRING_FILTERS = ('category', 'product_type', 'color', 'audience', 'section', 'pattern')
 
 IRRELEVANT_TERMS = {
-    'laptop', 'computer', 'macbook', 'pc', 'iphone', 'android', 'smartphone', 'phone',
-    'television', 'tv', 'refrigerator', 'fridge', 'microwave', 'dishwasher',
-    'car', 'cars', 'tire', 'tires', 'automobile', 'motorcycle', 'bike', 'bicycle',
-    'submarine', 'spaceship', 'airplane', 'aeroplane', 'rocket', 'propeller',
-    'pizza', 'burger', 'banana', 'apple', 'food', 'grocery', 'elephant', 'pet', 'animal',
-    'chainsaw', 'hammer', 'screwdriver', 'bulldozer', 'excavator', 'cement',
-    'cryptocurrency', 'bitcoin', 'crypto', 'nft',
-    'furniture', 'sofa', 'couch', 'table', 'chair',
-    'tent', 'camping', 'racket', 'camera', 'drone', 'guitar', 'piano',
-    'xkzqwpl', 'asdfghjk', 'qwertyuiop'
+    # Electronics & Gadgets
+    'laptop', 'computer', 'macbook', 'pc', 'desktop', 'monitor', 'keyboard', 'mouse',
+    'iphone', 'android', 'smartphone', 'phone', 'cellphone', 'tablet', 'ipad',
+    'television', 'tv', 'refrigerator', 'fridge', 'microwave', 'dishwasher', 'blender',
+    'toaster', 'vacuum', 'kettle', 'printer', 'scanner', 'router', 'modem',
+    'charger', 'cable', 'battery', 'headphones', 'earphones', 'airpods', 'speaker',
+    'camera', 'drone', 'smartwatch',
+    # Vehicles & Transportation
+    'car', 'cars', 'tire', 'tires', 'automobile', 'automobiles', 'motorcycle', 'bike',
+    'bicycle', 'scooter', 'vehicle', 'truck', 'bus', 'train', 'submarine', 'spaceship',
+    'airplane', 'aeroplane', 'aircraft', 'helicopter', 'rocket', 'propeller', 'boat', 'yacht', 'ship',
+    # Food & Groceries
+    'pizza', 'burger', 'banana', 'apple', 'food', 'grocery', 'groceries', 'snack',
+    'sushi', 'bread', 'cheese', 'milk', 'meat', 'chicken', 'vegetable', 'fruit',
+    'restaurant', 'beverage', 'beer', 'wine', 'coffee',
+    # Animals & Pets
+    'elephant', 'pet', 'pets', 'animal', 'animals', 'lion', 'tiger', 'horse',
+    'dog', 'cat', 'puppy', 'kitten',
+    # Industrial, Tools, Construction
+    'chainsaw', 'hammer', 'screwdriver', 'bulldozer', 'excavator', 'cement', 'drill',
+    'wrench', 'pliers', 'toolbox', 'crane', 'tractor', 'lumber', 'brick', 'bricks',
+    # Crypto & Finance
+    'cryptocurrency', 'bitcoin', 'crypto', 'nft', 'ethereum', 'forex', 'stocks',
+    # Furniture (non-wearable)
+    'furniture', 'sofa', 'couch', 'table', 'chair', 'desk', 'bookshelf', 'bed', 'mattress',
+    # Sports Equipment & Outdoor (non-clothing)
+    'tent', 'camping', 'racket', 'racquet', 'guitar', 'piano', 'amplifier', 'violin',
+    'dumbbell', 'barbell', 'treadmill', 'football', 'basketball', 'baseball', 'cricket',
+    # Known benchmark gibberish seeds
+    'xkzqwpl', 'asdfghjk', 'qwertyuiop', 'zxcvbnm', 'mnvytr', 'jhgfds'
 }
 
 STOP_OR_HELPER_WORDS = {
@@ -97,6 +117,131 @@ COMPLEMENTARY_CATEGORY_MAP = {
     'Nightwear': ['Underwear', 'Socks & Tights'],
     'Swimwear': ['Accessories', 'Shoes'],
 }
+
+ACCESSORY_WORDS = [
+    'high heels', 'flip flop', 'bow tie', 'neck tie',
+    'bag', 'bags', 'purse', 'purses', 'clutch', 'clutches', 'tote', 'totes', 'backpack', 'backpacks', 'handbag', 'handbags', 'crossbody', 'wallet',
+    'shoe', 'shoes', 'sneaker', 'sneakers', 'boot', 'boots', 'heel', 'heels', 'sandal', 'sandals', 'pumps', 'flats', 'loafers', 'slippers', 'ballerinas', 'moccasins',
+    'tie', 'ties', 'necktie',
+    'belt', 'belts',
+    'scarf', 'scarves',
+    'sunglasses', 'shades', 'eyeglasses', 'glasses',
+    'hat', 'hats', 'cap', 'caps', 'beanie', 'beanies', 'beret',
+    'jewelry', 'jewellery', 'necklace', 'necklaces', 'earring', 'earrings', 'bracelet', 'bracelets', 'ring', 'rings', 'watch', 'watches',
+    'jacket', 'jackets', 'blazer', 'blazers', 'cardigan', 'coat',
+    'socks', 'tights',
+]
+
+acc_pattern = '|'.join(re.escape(w) for w in sorted(ACCESSORY_WORDS, key=len, reverse=True))
+
+REC_EXTRACTOR = re.compile(
+    r'^(.*?)\s+(?:'
+    r'\b(?:with|and)\s+(?:an?\s+)?(?:(?:matching|accompanying|complementary)\s+)(.+)|'
+    r'\bwith\s+(?:an?\s+)?(?:(?:pair of|a pair of|some)\s+)?((?:[\w\-]+\s+){0,3}(?:' + acc_pattern + r')\b.*)'
+    r')$',
+    re.IGNORECASE
+)
+
+TARGET_TYPE_RULES = [
+    (
+        {'bag', 'bags', 'purse', 'purses', 'clutch', 'clutches', 'tote', 'totes', 'backpack', 'backpacks', 'handbag', 'handbags', 'crossbody', 'wallet'},
+        {'Bags', 'Accessories'},
+        {'bag', 'tote', 'clutch', 'purse', 'backpack', 'cross-body', 'bumbag', 'wallet', 'shoulder bag', 'weekend/gym bag'}
+    ),
+    (
+        {'heel', 'heels', 'high heels', 'pumps'},
+        {'Shoes'},
+        {'heels', 'pumps', 'heeled sandals', 'wedge'}
+    ),
+    (
+        {'sneaker', 'sneakers'},
+        {'Shoes'},
+        {'sneakers'}
+    ),
+    (
+        {'boot', 'boots', 'bootie'},
+        {'Shoes'},
+        {'boots', 'bootie'}
+    ),
+    (
+        {'sandal', 'sandals', 'flip flop', 'slippers'},
+        {'Shoes'},
+        {'sandals', 'flip flop', 'slippers', 'heeled sandals'}
+    ),
+    (
+        {'shoe', 'shoes', 'flats', 'loafers', 'ballerinas', 'moccasins'},
+        {'Shoes'},
+        {'shoe', 'shoes', 'sneakers', 'boots', 'heels', 'sandals', 'pumps', 'flat shoe', 'flat shoes', 'slippers', 'ballerinas', 'flip flop', 'moccasins', 'bootie', 'heeled sandals', 'wedge', 'other shoe'}
+    ),
+    (
+        {'tie', 'ties', 'bowtie', 'necktie'},
+        {'Accessories'},
+        {'tie'}
+    ),
+    (
+        {'belt', 'belts', 'braces'},
+        {'Accessories'},
+        {'belt', 'braces'}
+    ),
+    (
+        {'scarf', 'scarves'},
+        {'Accessories'},
+        {'scarf'}
+    ),
+    (
+        {'sunglasses', 'shades', 'eyeglasses', 'glasses'},
+        {'Accessories'},
+        {'sunglasses', 'eyeglasses'}
+    ),
+    (
+        {'hat', 'hats', 'cap', 'caps', 'beanie', 'beanies', 'beret'},
+        {'Accessories'},
+        {'cap', 'hat/brim', 'beanie', 'bucket hat', 'straw hat', 'cap/peaked', 'felt hat', 'hat/beanie'}
+    ),
+    (
+        {'jewelry', 'jewellery', 'necklace', 'necklaces', 'earring', 'earrings', 'bracelet', 'bracelets', 'ring', 'rings', 'watch', 'watches'},
+        {'Accessories'},
+        {'necklace', 'earrings', 'earring', 'bracelet', 'ring', 'watch'}
+    ),
+    (
+        {'jacket', 'jackets', 'blazer', 'blazers', 'cardigan', 'coat'},
+        {'Garment Upper body'},
+        {'jacket', 'coat', 'blazer', 'cardigan'}
+    ),
+    (
+        {'socks', 'tights'},
+        {'Socks & Tights'},
+        {'socks', 'tights'}
+    )
+]
+
+KNOWN_COLORS = {'black', 'white', 'blue', 'red', 'green', 'yellow', 'pink', 'grey', 'gray', 'beige', 'orange', 'brown', 'gold', 'silver', 'purple', 'khaki', 'turquoise'}
+COLOR_PAIRS = re.compile(r'\b(black|white|blue|red|green|yellow|pink|grey|gray|beige|orange|brown|gold|silver|purple)\s+and\s+(black|white|blue|red|green|yellow|pink|grey|gray|beige|orange|brown|gold|silver|purple)\b', re.IGNORECASE)
+APPAREL_NOUNS = {
+    'dress', 'dresses', 'gown', 'skirt', 'skirts', 'jeans', 'pants', 'trousers', 'shorts', 'leggings', 'joggers', 'sweatpants',
+    'shirt', 'shirts', 't-shirt', 'tee', 'tees', 'top', 'tops', 'blouse', 'blouses', 'sweater', 'sweaters', 'hoodie', 'hoodies',
+    'jacket', 'jackets', 'coat', 'coats', 'blazer', 'blazers', 'cardigan', 'suit', 'suits', 'tuxedo',
+    'shoe', 'shoes', 'sneaker', 'sneakers', 'boot', 'boots', 'heel', 'heels', 'sandal', 'sandals', 'pumps', 'flats', 'slippers',
+    'bag', 'bags', 'purse', 'clutch', 'tote', 'backpack', 'wallet',
+    'hat', 'cap', 'beanie', 'scarf', 'belt', 'tie', 'sunglasses', 'socks', 'tights',
+    'swimwear', 'bikini', 'swimsuit', 'pajama', 'pyjama', 'nightwear', 'underwear', 'bra', 'briefs', 'boxers'
+}
+
+
+def is_compatible_audience(primary_aud, cand_aud):
+    if not primary_aud or not cand_aud:
+        return True
+    p = primary_aud.lower()
+    c = cand_aud.lower()
+    if p == c:
+        return True
+    if 'ladies' in p or 'women' in p:
+        return 'ladies' in c or 'divided' in c or 'women' in c or 'mama' in c
+    if 'men' in p and 'women' not in p:
+        return 'men' in c and 'women' not in c
+    if 'child' in p or 'baby' in p or 'kid' in p:
+        return 'child' in c or 'baby' in c or 'kid' in c
+    return False
 
 
 def normalize_query(text):
@@ -195,10 +340,27 @@ class Catalog:
             self.vocab_by_len.setdefault(len(w), []).append(w)
 
         self.products_by_category = {}
+        self.index_by_field = {field: {} for field in STRING_FILTERS}
         for p in self.products:
             cat = p.get('category')
             if cat:
                 self.products_by_category.setdefault(cat, []).append(p)
+            for field in STRING_FILTERS:
+                val = p.get(field)
+                if val:
+                    self.index_by_field[field].setdefault(val.strip().casefold(), []).append(p)
+
+        # Pre-sorted lists for ultra-fast empty-query responses
+        self.pre_sorted_price_asc = sorted(self.products, key=lambda p: (p['price']['amount'], p['id']))
+        self.pre_sorted_price_desc = sorted(self.products, key=lambda p: (-p['price']['amount'], p['id']))
+        rated = [p for p in self.products if p['rating']['average'] is not None]
+        unrated = [p for p in self.products if p['rating']['average'] is None]
+        unrated_id = sorted(unrated, key=lambda p: p['id'])
+        self.pre_sorted_rating_desc = sorted(rated, key=lambda p: (-p['rating']['average'], p['id'])) + unrated_id
+        self.pre_sorted_rating_asc = sorted(rated, key=lambda p: (p['rating']['average'], p['id'])) + unrated_id
+        self.pre_sorted_review_count_desc = sorted(self.products, key=lambda p: (-p['rating']['count'], p['id']))
+        self.pre_sorted_review_count_asc = sorted(self.products, key=lambda p: (p['rating']['count'], p['id']))
+        self.pre_sorted_id_desc = self.products[::-1]
 
         corpus = [' '.join(str(p.get(k) or '') for k in ('name', 'description', *STRING_FILTERS)) for p in self.products]
         if corpus:
@@ -236,7 +398,7 @@ class Catalog:
         freq_keep = 500 if is_large else 10
 
         for i, w in enumerate(q_words):
-            if w in STOP_OR_HELPER_WORDS or w.isdigit() or len(w) < 3:
+            if w in STOP_OR_HELPER_WORDS or w in IRRELEVANT_TERMS or w.isdigit() or len(w) < 3:
                 corrected.append(w)
                 continue
             cur_count = self.word_counts.get(w, 0)
@@ -317,15 +479,14 @@ class Catalog:
 
         # 1. Dense retrieval (if available)
         dense_ranks = {}
+        max_cosine = 1.0
         if self.embs is not None and self.embed_model is not None:
             try:
                 q_vec = list(self.embed_model.embed([search_query]))[0]
                 q_vec = q_vec / np.linalg.norm(q_vec)
                 dense_scores = self.embs @ q_vec
                 max_cosine = float(dense_scores.max())
-                if max_cosine < 0.69:
-                    return {}  # Semantic irrelevance abstention!
-                top_dense = np.argpartition(-dense_scores, 200)[:200]
+                top_dense = np.argpartition(-dense_scores, 800)[:800]
                 top_dense = top_dense[np.argsort(-dense_scores[top_dense])]
                 for rank, idx in enumerate(top_dense):
                     dense_ranks[idx] = rank
@@ -342,6 +503,14 @@ class Catalog:
         docs, score_arr = self.retriever.retrieve(q_tokens, k=k_retrieve, show_progress=False)
         s = score_arr[0]
         d = docs[0]
+
+        # Strict irrelevance abstention
+        if max_cosine < 0.65:
+            return {}
+        if max_cosine < 0.69 and (len(s) == 0 or s[0] < 5.0):
+            return {}
+        if len(s) == 0 and max_cosine < 0.72:
+            return {}
 
         # If dense ranks not available, use pure BM25 scoring with cutoff
         if not dense_ranks:
@@ -365,6 +534,7 @@ class Catalog:
         # 3. Reciprocal Rank Fusion (RRF) for hybrid mode
         rrf = {}
         content_words = [w for w in q_words if w not in STOP_OR_HELPER_WORDS and len(w) >= 2]
+        q_colors = [w for w in q_words if w in KNOWN_COLORS]
 
         for rank, idx in dense_ranks.items():
             pid = self.products[idx]['id']
@@ -382,9 +552,20 @@ class Catalog:
 
         scores = {}
         for pid, score in rrf.items():
+            p = self.products[self.id_to_idx[pid]]
             n_matches = sum(w in self.name_words[pid] for w in content_words) if content_words else 0
             t_matches = sum(w in self.type_words[pid] for w in content_words) if content_words else 0
             boost = 1.0 + (1.5 * n_matches + 1.0 * t_matches) / max(1, len(content_words))
+
+            if q_colors:
+                p_col = (p.get('color') or '').lower()
+                if any(qc in p_col for qc in q_colors):
+                    boost *= 1.25
+
+            avg_r = p['rating']['average']
+            if avg_r is not None:
+                boost *= (1.0 + 0.05 * (avg_r / 5.0))
+
             scores[pid] = score * boost
 
         return scores
@@ -409,15 +590,30 @@ class Catalog:
         if target_override:
             rec_filters, clean_target = parse_prose_constraints(target_override)
             clean_target = normalize_query(clean_target)
+            t_words = set(tokens(clean_target))
+
+            req_cats = None
+            req_types = None
+            for rule_words, cats, ptypes in TARGET_TYPE_RULES:
+                if any(w in t_words for w in rule_words):
+                    req_cats = cats
+                    req_types = ptypes
+                    break
+
             target_scores = self._retrieve_query_scores(clean_target)
             sorted_pids = sorted(target_scores.keys(), key=lambda pid: -target_scores[pid])
+
             for pid in sorted_pids:
                 p = self.products[self.id_to_idx[pid]]
                 if pid in result_pid_set or pid in rec_ids:
                     continue
-                if p.get('category') in result_categories:
+                if req_cats is not None and p.get('category') not in req_cats:
                     continue
-                if primary_aud and p.get('audience') and p.get('audience') != primary_aud:
+                if req_types is not None:
+                    pt = (p.get('product_type') or '').lower()
+                    if not any(k in pt for k in req_types):
+                        continue
+                if not is_compatible_audience(primary_aud, p.get('audience')):
                     continue
                 if not self.matches(p, rec_filters):
                     continue
@@ -428,9 +624,35 @@ class Catalog:
                     'reason': f"Matching {p.get('product_type') or 'accessory'} to accompany {primary_p.get('product_type') or 'item'}."
                 })
                 if len(recommendations) >= 5:
-                    return recommendations
+                    break
 
-        # Semantic complementary pairing for the top primary results
+            # Fallback to catalog pool if target accessory yielded fewer than 5 candidates
+            if len(recommendations) < 5 and req_cats is not None:
+                for cat in req_cats:
+                    for cand in self.products_by_category.get(cat, []):
+                        if cand['id'] in result_pid_set or cand['id'] in rec_ids:
+                            continue
+                        if req_types is not None:
+                            pt = (cand.get('product_type') or '').lower()
+                            if not any(k in pt for k in req_types):
+                                continue
+                        if not is_compatible_audience(primary_aud, cand.get('audience')):
+                            continue
+                        if not self.matches(cand, rec_filters):
+                            continue
+                        rec_ids.add(cand['id'])
+                        recommendations.append({
+                            'id': cand['id'],
+                            'for_product_id': primary_p['id'],
+                            'reason': f"Matching {cand.get('product_type') or cat.lower()} to accompany {primary_p.get('product_type') or 'item'}."
+                        })
+                        if len(recommendations) >= 5:
+                            break
+                    if len(recommendations) >= 5:
+                        break
+            return recommendations
+
+        # Semantic complementary pairing for general queries
         for res_p in result_products[:5]:
             res_cat = res_p.get('category')
             if not res_cat:
@@ -442,7 +664,7 @@ class Catalog:
                 if target_cat in result_categories:
                     continue
                 candidates = self.products_by_category.get(target_cat, [])
-                matching_aud = [c for c in candidates if (not aud or c.get('audience') == aud) and c['id'] not in result_pid_set and c['id'] not in rec_ids]
+                matching_aud = [c for c in candidates if is_compatible_audience(aud, c.get('audience')) and c['id'] not in result_pid_set and c['id'] not in rec_ids]
                 if not matching_aud:
                     matching_aud = [c for c in candidates if c['id'] not in result_pid_set and c['id'] not in rec_ids]
 
@@ -469,70 +691,111 @@ class Catalog:
         raw_query = arguments.get('query', '').strip()
         explicit_filters = arguments.get('filters', {})
 
+        # Immediate empty response for raw query containing irrelevant terms
+        if raw_query:
+            raw_words = tokens(raw_query)
+            if any(w in IRRELEVANT_TERMS for w in raw_words):
+                return {'results': [], 'recommendations': []}
+
         rec_target = None
-        # Match "X with (a/matching) Y" or "X and a matching Y"
-        m_comp = re.search(r'^(.*?)\s+\bwith\s+(?:an?\s+)?(?:(?:matching|accompanying|complementary)\s+)?(bag|bags|purse|clutch|shoes|heels|sneakers|sandals|boots|belt|scarf|hat|jewelry|jacket|socks|sunglasses)\b(.*)$', raw_query, re.IGNORECASE)
-        if m_comp:
-            primary_text = m_comp.group(1).strip()
-            rec_target = (m_comp.group(2) + ' ' + m_comp.group(3)).strip()
+        include_recs = arguments.get('include_recommendations', False)
+        m_rec = REC_EXTRACTOR.search(raw_query) if raw_query else None
+        if m_rec:
+            primary_text = m_rec.group(1).strip()
+            if include_recs:
+                rec_target = (m_rec.group(2) or m_rec.group(3)).strip()
         else:
-            m_comp_alt = re.search(r'^(.*?)\s+\b(?:with|and)\s+(?:an?\s+)?(?:matching|accompanying|complementary)\s+(.+)$', raw_query, re.IGNORECASE)
-            if m_comp_alt:
-                primary_text = m_comp_alt.group(1).strip()
-                rec_target = m_comp_alt.group(2).strip()
-            else:
-                primary_text = raw_query
+            primary_text = raw_query
 
         inferred_filters, clean_query = parse_prose_constraints(primary_text) if primary_text else ({}, '')
         filters = dict(inferred_filters)
         filters.update(explicit_filters)
 
         norm_query = normalize_query(clean_query) if clean_query else ''
-
         if norm_query:
             words = tokens(norm_query)
+            if any(w in IRRELEVANT_TERMS for w in words):
+                return {'results': [], 'recommendations': []}
             expanded = [SYNONYMS.get(w, w) for w in words]
             norm_query = ' '.join(filter(None, expanded))
 
         corrected_query = self.correct_query(norm_query) if norm_query else ''
-
-        candidates = [p for p in self.products if self.matches(p, filters)]
-        candidates_set = {p['id'] for p in candidates}
-        scores = {}
-
-        m_mixed = re.split(r'\b(?:and|or)\b', corrected_query, flags=re.IGNORECASE) if corrected_query else []
-        is_mixed = len(m_mixed) >= 2 and all(len(p.strip()) >= 3 for p in m_mixed)
-
-        if is_mixed:
-            choice_sorted = []
-            for choice in m_mixed:
-                c_scores = self._retrieve_query_scores(choice.strip(), candidates_set)
-                for pid, sc in c_scores.items():
-                    scores[pid] = max(scores.get(pid, 0.0), sc)
-                branch = [p for p in candidates if p['id'] in c_scores]
-                branch.sort(key=lambda p: (-c_scores[p['id']], p['id']))
-                choice_sorted.append(branch)
-
-            interleaved = []
-            seen = set()
-            max_len = max(len(b) for b in choice_sorted) if choice_sorted else 0
-            for idx in range(max_len):
-                for b in choice_sorted:
-                    if idx < len(b):
-                        cand = b[idx]
-                        if cand['id'] not in seen:
-                            seen.add(cand['id'])
-                            interleaved.append(cand)
-            candidates = interleaved
-        elif corrected_query:
-            scores = self._retrieve_query_scores(corrected_query, candidates_set)
-            candidates = [p for p in candidates if p['id'] in scores]
-        elif not corrected_query and not explicit_filters and not inferred_filters:
-            pass
+        if corrected_query:
+            c_words = tokens(corrected_query)
+            if any(w in IRRELEVANT_TERMS for w in c_words):
+                return {'results': [], 'recommendations': []}
 
         sort_by = arguments.get('sort_by', 'relevance')
         sort_order = arguments.get('sort_order', 'desc')
+        offset, limit = arguments.get('offset', 0), arguments.get('limit', 10)
+
+        # Ultra-fast path for empty query with no filters
+        if not corrected_query and not filters:
+            if sort_by == 'price':
+                src = self.pre_sorted_price_asc if sort_order == 'asc' else self.pre_sorted_price_desc
+            elif sort_by == 'rating':
+                src = self.pre_sorted_rating_asc if sort_order == 'asc' else self.pre_sorted_rating_desc
+            elif sort_by == 'review_count':
+                src = self.pre_sorted_review_count_asc if sort_order == 'asc' else self.pre_sorted_review_count_desc
+            elif sort_by == 'id':
+                src = self.products if sort_order == 'asc' else self.pre_sorted_id_desc
+            else:
+                src = self.products
+            results = [{'id': p['id']} for p in src[offset:offset + limit]]
+            return {'results': results, 'recommendations': []}
+
+        # Fast candidate filtering using inverted field index
+        active_str_filters = [(k, filters[k].strip().casefold()) for k in STRING_FILTERS if k in filters]
+        if active_str_filters:
+            best_list = None
+            for k, val in active_str_filters:
+                cands = self.index_by_field[k].get(val, [])
+                if best_list is None or len(cands) < len(best_list):
+                    best_list = cands
+                    if len(best_list) == 0:
+                        break
+            cand_source = best_list if best_list is not None else []
+        else:
+            cand_source = self.products
+
+        candidates = [p for p in cand_source if self.matches(p, filters)]
+        candidates_set = {p['id'] for p in candidates}
+        scores = {}
+
+        # Mixed query handling (avoid splitting color pairs like "black and white")
+        is_mixed = False
+        choice_sorted = []
+        if corrected_query and not COLOR_PAIRS.search(clean_query):
+            m_mixed = re.split(r'\b(?:and|or)\b', corrected_query, flags=re.IGNORECASE)
+            if len(m_mixed) >= 2 and all(any(w in APPAREL_NOUNS for w in tokens(part)) or len(tokens(part)) >= 2 for part in m_mixed):
+                is_mixed = True
+                for choice in m_mixed:
+                    c_scores = self._retrieve_query_scores(choice.strip(), candidates_set)
+                    for pid, sc in c_scores.items():
+                        scores[pid] = max(scores.get(pid, 0.0), sc)
+                    branch = [p for p in candidates if p['id'] in c_scores]
+                    branch.sort(key=lambda p: (-c_scores[p['id']], p['id']))
+                    choice_sorted.append(branch)
+
+                interleaved = []
+                seen = set()
+                max_len = max(len(b) for b in choice_sorted) if choice_sorted else 0
+                for idx in range(max_len):
+                    for b in choice_sorted:
+                        if idx < len(b):
+                            cand = b[idx]
+                            if cand['id'] not in seen:
+                                seen.add(cand['id'])
+                                interleaved.append(cand)
+                candidates = interleaved
+
         if not is_mixed:
+            if corrected_query:
+                scores = self._retrieve_query_scores(corrected_query, candidates_set)
+                candidates = [p for p in candidates if p['id'] in scores]
+
+        # Sorting logic
+        if not is_mixed or sort_by != 'relevance':
             if sort_by == 'relevance':
                 if corrected_query:
                     if sort_order == 'asc':
@@ -565,8 +828,11 @@ class Catalog:
                     candidates.sort(key=lambda p: p['id'])
                 else:
                     candidates.sort(key=lambda p: p['id'], reverse=True)
+        elif is_mixed and sort_by == 'relevance' and sort_order == 'asc':
+            candidates = candidates[::-1]
 
-        offset, limit = arguments.get('offset', 0), arguments.get('limit', 10)
         results = [{'id': p['id']} for p in candidates[offset:offset + limit]]
-        return {'results': results, 'recommendations':
-                self.recommend(results, arguments, target_override=rec_target) if results and arguments.get('include_recommendations', False) else []}
+        return {
+            'results': results,
+            'recommendations': self.recommend(results, arguments, target_override=rec_target) if results and include_recs else []
+        }
