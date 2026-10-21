@@ -1,0 +1,1591 @@
+{
+  "summary": {
+    "total_queries": 64,
+    "constraint_satisfaction_rate": 66.67,
+    "determinism_rate": 100.0,
+    "gibberish_empty_rate": 100.0,
+    "valid_queries_empty_rate": 75.86,
+    "overall_empty_rate": 78.12,
+    "diversity_in_top10": {
+      "mean_unique_categories": 1.93,
+      "mean_unique_product_types": 2.43,
+      "mean_unique_sections": 3.57
+    },
+    "latency_ms": {
+      "mean": 295.09,
+      "p50": 314.1,
+      "p95": 353.2
+    },
+    "category_breakdown": {
+      "hinglish": {
+        "count": 6,
+        "constraint_sat": 100.0,
+        "empty_count": 6,
+        "mean_latency_ms": 322.4807166746662
+      },
+      "gibberish": {
+        "count": 6,
+        "constraint_sat": 100.0,
+        "empty_count": 6,
+        "mean_latency_ms": 291.2739999931849
+      },
+      "filter_combinations": {
+        "count": 2,
+        "constraint_sat": 100.0,
+        "empty_count": 0,
+        "mean_latency_ms": 112.7701499935938
+      },
+      "plain_keywords": {
+        "count": 6,
+        "constraint_sat": 100.0,
+        "empty_count": 0,
+        "mean_latency_ms": 307.0263000020835
+      },
+      "empty_string": {
+        "count": 4,
+        "constraint_sat": 100.0,
+        "empty_count": 0,
+        "mean_latency_ms": 115.53914999967674
+      },
+      "very_long_queries": {
+        "count": 4,
+        "constraint_sat": 0.0,
+        "empty_count": 4,
+        "mean_latency_ms": 282.0925249980064
+      },
+      "synonyms": {
+        "count": 6,
+        "constraint_sat": 100.0,
+        "empty_count": 6,
+        "mean_latency_ms": 331.05399999961566
+      },
+      "complementary_intent": {
+        "count": 6,
+        "constraint_sat": 14.285714285714285,
+        "empty_count": 5,
+        "mean_latency_ms": 305.6486333322634
+      },
+      "typos": {
+        "count": 6,
+        "constraint_sat": 100.0,
+        "empty_count": 6,
+        "mean_latency_ms": 303.5187999921618
+      },
+      "occasion_intent": {
+        "count": 6,
+        "constraint_sat": 0.0,
+        "empty_count": 6,
+        "mean_latency_ms": 320.38586666749325
+      },
+      "prose_budgets": {
+        "count": 6,
+        "constraint_sat": 100.0,
+        "empty_count": 6,
+        "mean_latency_ms": 339.7412333336736
+      },
+      "color_gender_constraints": {
+        "count": 6,
+        "constraint_sat": 100.0,
+        "empty_count": 5,
+        "mean_latency_ms": 323.7933499913197
+      }
+    }
+  },
+  "queries": [
+    {
+      "id": "plain_01",
+      "category": "plain_keywords",
+      "query": "cotton top",
+      "latency_ms": 345.5394000047818,
+      "is_deterministic": true,
+      "result_count": 10,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 1,
+        "unique_types": 4,
+        "unique_sections": 6
+      },
+      "results": [
+        {
+          "id": "0482217001"
+        },
+        {
+          "id": "0485591001"
+        },
+        {
+          "id": "0494291002"
+        },
+        {
+          "id": "0494291003"
+        },
+        {
+          "id": "0506269001"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "plain_02",
+      "category": "plain_keywords",
+      "query": "black dress",
+      "latency_ms": 311.4194000081625,
+      "is_deterministic": true,
+      "result_count": 10,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 2,
+      "checks_passed": 2,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 6
+      },
+      "results": [
+        {
+          "id": "0212629004"
+        },
+        {
+          "id": "0272591001"
+        },
+        {
+          "id": "0315352006"
+        },
+        {
+          "id": "0316553025"
+        },
+        {
+          "id": "0355421003"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "plain_03",
+      "category": "plain_keywords",
+      "query": "blue denim jeans",
+      "latency_ms": 299.27479999605566,
+      "is_deterministic": true,
+      "result_count": 10,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 2,
+      "checks_passed": 2,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 2
+      },
+      "results": [
+        {
+          "id": "0607399002"
+        },
+        {
+          "id": "0249136006"
+        },
+        {
+          "id": "0249136015"
+        },
+        {
+          "id": "0249136019"
+        },
+        {
+          "id": "0249136020"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "plain_04",
+      "category": "plain_keywords",
+      "query": "white sneakers",
+      "latency_ms": 294.4854999950621,
+      "is_deterministic": true,
+      "result_count": 10,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 2,
+      "checks_passed": 2,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 3
+      },
+      "results": [
+        {
+          "id": "0715664001"
+        },
+        {
+          "id": "0715664003"
+        },
+        {
+          "id": "0715664005"
+        },
+        {
+          "id": "0796528003"
+        },
+        {
+          "id": "0804507001"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "plain_05",
+      "category": "plain_keywords",
+      "query": "leather jacket",
+      "latency_ms": 296.0993000015151,
+      "is_deterministic": true,
+      "result_count": 10,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 5
+      },
+      "results": [
+        {
+          "id": "0547718001"
+        },
+        {
+          "id": "0601900002"
+        },
+        {
+          "id": "0615119001"
+        },
+        {
+          "id": "0653551001"
+        },
+        {
+          "id": "0683393001"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "plain_06",
+      "category": "plain_keywords",
+      "query": "wool sweater",
+      "latency_ms": 295.3394000069238,
+      "is_deterministic": true,
+      "result_count": 10,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 3
+      },
+      "results": [
+        {
+          "id": "0832819001"
+        },
+        {
+          "id": "0832819002"
+        },
+        {
+          "id": "0883157001"
+        },
+        {
+          "id": "0883157002"
+        },
+        {
+          "id": "0892893001"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "typo_01",
+      "category": "typos",
+      "query": "coton dres",
+      "latency_ms": 288.5048999742139,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "typo_02",
+      "category": "typos",
+      "query": "whie snakers",
+      "latency_ms": 308.5253000026569,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "typo_03",
+      "category": "typos",
+      "query": "blac t-shrt",
+      "latency_ms": 291.69919999549165,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "typo_04",
+      "category": "typos",
+      "query": "blu denm jens",
+      "latency_ms": 293.3150999888312,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "typo_05",
+      "category": "typos",
+      "query": "lether jackt",
+      "latency_ms": 283.5661999997683,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "typo_06",
+      "category": "typos",
+      "query": "summr skrt",
+      "latency_ms": 355.5020999920089,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "hinglish_01",
+      "category": "hinglish",
+      "query": "party ke liye black dress",
+      "latency_ms": 328.3981000131462,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "hinglish_02",
+      "category": "hinglish",
+      "query": "ladko ke liye formal white shirt",
+      "latency_ms": 314.09920001169667,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "hinglish_03",
+      "category": "hinglish",
+      "query": "garmi ke kapde cotton top",
+      "latency_ms": 331.6525999980513,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "hinglish_04",
+      "category": "hinglish",
+      "query": "running ke liye shoes",
+      "latency_ms": 322.9408000188414,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "hinglish_05",
+      "category": "hinglish",
+      "query": "saste black jeans under 1500",
+      "latency_ms": 317.065699986415,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "hinglish_06",
+      "category": "hinglish",
+      "query": "ladies ke liye sundar skirt",
+      "latency_ms": 320.72790001984686,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "synonym_01",
+      "category": "synonyms",
+      "query": "white kicks and black tee",
+      "latency_ms": 352.6789000025019,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "synonym_02",
+      "category": "synonyms",
+      "query": "trousers and warm jumper",
+      "latency_ms": 326.10740000382066,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "synonym_03",
+      "category": "synonyms",
+      "query": "dark shades for summer",
+      "latency_ms": 321.5090000012424,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "synonym_04",
+      "category": "synonyms",
+      "query": "leather purse for women",
+      "latency_ms": 325.84350000252016,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "synonym_05",
+      "category": "synonyms",
+      "query": "black ankle booties",
+      "latency_ms": 326.1947999999393,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "synonym_06",
+      "category": "synonyms",
+      "query": "winter coat for men",
+      "latency_ms": 333.99039998766966,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "budget_01",
+      "category": "prose_budgets",
+      "query": "cotton dress under 1500",
+      "latency_ms": 392.03899999847636,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "budget_02",
+      "category": "prose_budgets",
+      "query": "running shoes below INR 2000",
+      "latency_ms": 310.5304000200704,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "budget_03",
+      "category": "prose_budgets",
+      "query": "jacket under 3000",
+      "latency_ms": 315.216099988902,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "budget_04",
+      "category": "prose_budgets",
+      "query": "jeans between 1000 and 2000",
+      "latency_ms": 329.665199998999,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "budget_05",
+      "category": "prose_budgets",
+      "query": "t-shirt less than 800",
+      "latency_ms": 343.2459000032395,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "budget_06",
+      "category": "prose_budgets",
+      "query": "black trousers max 1200",
+      "latency_ms": 347.7507999923546,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "constraint_01",
+      "category": "color_gender_constraints",
+      "query": "red dress for women",
+      "latency_ms": 318.89049999881536,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "constraint_02",
+      "category": "color_gender_constraints",
+      "query": "blue formal shirt for men",
+      "latency_ms": 312.5591999851167,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "constraint_03",
+      "category": "color_gender_constraints",
+      "query": "pink top for baby",
+      "latency_ms": 315.3532999858726,
+      "is_deterministic": true,
+      "result_count": 2,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 2,
+      "checks_passed": 2,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 1,
+        "unique_types": 2,
+        "unique_sections": 2
+      },
+      "results": [
+        {
+          "id": "0809752002"
+        },
+        {
+          "id": "0885714002"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "constraint_04",
+      "category": "color_gender_constraints",
+      "query": "yellow summer dress for girls",
+      "latency_ms": 309.5296999963466,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "constraint_05",
+      "category": "color_gender_constraints",
+      "query": "black suit for gentlemen",
+      "latency_ms": 323.3516999753192,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "constraint_06",
+      "category": "color_gender_constraints",
+      "query": "white hoodie for ladies",
+      "latency_ms": 363.07570000644773,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "occasion_01",
+      "category": "occasion_intent",
+      "query": "outfit for a beach wedding",
+      "latency_ms": 333.0673000018578,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 0,
+      "constraint_score": 0.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "occasion_02",
+      "category": "occasion_intent",
+      "query": "something comfortable for a lazy Sunday",
+      "latency_ms": 328.83959999890067,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 0,
+      "constraint_score": 0.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "occasion_03",
+      "category": "occasion_intent",
+      "query": "elegant dress for dinner party",
+      "latency_ms": 318.80410001031123,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "occasion_04",
+      "category": "occasion_intent",
+      "query": "athletic wear for running in the gym",
+      "latency_ms": 353.1989000039175,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 0,
+      "constraint_score": 0.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "occasion_05",
+      "category": "occasion_intent",
+      "query": "formal business interview attire",
+      "latency_ms": 295.5301000038162,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 0,
+      "constraint_score": 0.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "occasion_06",
+      "category": "occasion_intent",
+      "query": "warm cozy outfit for cold winter snow",
+      "latency_ms": 292.8751999861561,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 0,
+      "constraint_score": 0.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "complement_01",
+      "category": "complementary_intent",
+      "query": "A dress for dinner under INR 2000 with a matching bag under INR 1000",
+      "latency_ms": 307.4051000003237,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 0,
+      "constraint_score": 0.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "complement_02",
+      "category": "complementary_intent",
+      "query": "black cocktail dress with high heels",
+      "latency_ms": 314.3055999826174,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 0,
+      "constraint_score": 0.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "complement_03",
+      "category": "complementary_intent",
+      "query": "formal suit for men with matching tie",
+      "latency_ms": 315.92819999787025,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 0,
+      "constraint_score": 0.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "complement_04",
+      "category": "complementary_intent",
+      "query": "beach swimwear with sunglasses",
+      "latency_ms": 289.1146999900229,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 0,
+      "constraint_score": 0.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "complement_05",
+      "category": "complementary_intent",
+      "query": "casual denim jacket with a scarf",
+      "latency_ms": 288.0379999987781,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 0,
+      "constraint_score": 0.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "complement_06",
+      "category": "complementary_intent",
+      "query": "cotton skirt",
+      "latency_ms": 319.1002000239678,
+      "is_deterministic": true,
+      "result_count": 5,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 2,
+      "checks_passed": 1,
+      "constraint_score": 0.5,
+      "diversity": {
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 3
+      },
+      "results": [
+        {
+          "id": "0317812001"
+        },
+        {
+          "id": "0317812011"
+        },
+        {
+          "id": "0317812012"
+        },
+        {
+          "id": "0491350001"
+        },
+        {
+          "id": "0496573002"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "empty_01",
+      "category": "empty_string",
+      "query": "",
+      "latency_ms": 141.88050001394004,
+      "is_deterministic": true,
+      "result_count": 10,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 4,
+        "unique_types": 5,
+        "unique_sections": 3
+      },
+      "results": [
+        {
+          "id": "0108775015"
+        },
+        {
+          "id": "0108775044"
+        },
+        {
+          "id": "0108775051"
+        },
+        {
+          "id": "0110065001"
+        },
+        {
+          "id": "0110065002"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "empty_02",
+      "category": "empty_string",
+      "query": "   ",
+      "latency_ms": 103.03469997597858,
+      "is_deterministic": true,
+      "result_count": 10,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 4,
+        "unique_types": 5,
+        "unique_sections": 3
+      },
+      "results": [
+        {
+          "id": "0108775015"
+        },
+        {
+          "id": "0108775044"
+        },
+        {
+          "id": "0108775051"
+        },
+        {
+          "id": "0110065001"
+        },
+        {
+          "id": "0110065002"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "empty_03",
+      "category": "empty_string",
+      "query": "\t\n  ",
+      "latency_ms": 114.80219999793917,
+      "is_deterministic": true,
+      "result_count": 5,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 2,
+        "unique_types": 2,
+        "unique_sections": 2
+      },
+      "results": [
+        {
+          "id": "0108775015"
+        },
+        {
+          "id": "0108775044"
+        },
+        {
+          "id": "0108775051"
+        },
+        {
+          "id": "0110065001"
+        },
+        {
+          "id": "0110065002"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "empty_04",
+      "category": "empty_string",
+      "query": "",
+      "latency_ms": 102.43920001084916,
+      "is_deterministic": true,
+      "result_count": 10,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 4,
+        "unique_types": 5,
+        "unique_sections": 5
+      },
+      "results": [
+        {
+          "id": "0108775015"
+        },
+        {
+          "id": "0110065001"
+        },
+        {
+          "id": "0111565001"
+        },
+        {
+          "id": "0111586001"
+        },
+        {
+          "id": "0111593001"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "gibberish_01",
+      "category": "gibberish",
+      "query": "spaceship engine",
+      "latency_ms": 281.69800000614487,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "gibberish_02",
+      "category": "gibberish",
+      "query": "quantum laptop computer",
+      "latency_ms": 285.5089999793563,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "gibberish_03",
+      "category": "gibberish",
+      "query": "pet elephant food",
+      "latency_ms": 286.0334999859333,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "gibberish_04",
+      "category": "gibberish",
+      "query": "diesel submarine propeller",
+      "latency_ms": 278.2709999883082,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "gibberish_05",
+      "category": "gibberish",
+      "query": "xkzqwpl mnvytr jhgfds",
+      "latency_ms": 341.6588999971282,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "gibberish_06",
+      "category": "gibberish",
+      "query": "nuclear hydraulic bulldozer cement",
+      "latency_ms": 274.4736000022385,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "long_01",
+      "category": "very_long_queries",
+      "query": "I am looking for a very elegant and high quality premium black evening dinner dress made of cotton or velvet that fits well for a formal gala event and is comfortable to wear all night under INR 3000",
+      "latency_ms": 270.2594999864232,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "long_02",
+      "category": "very_long_queries",
+      "query": "Looking for stylish comfortable everyday walking shoes or sneakers in white or black color with good cushioning for daily office commute and casual outings",
+      "latency_ms": 269.0545000077691,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "long_03",
+      "category": "very_long_queries",
+      "query": "Need a relaxed fit warm fleece hoodie and matching comfortable sweatpants for lounging at home on a cold rainy weekend with soft fabric",
+      "latency_ms": 272.1433000115212,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 1,
+      "checks_passed": 0,
+      "constraint_score": 0.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "long_04",
+      "category": "very_long_queries",
+      "query": "Searching for a formal crisp cotton white button-up shirt suitable for men to wear with a suit during corporate client meetings and summer business presentations",
+      "latency_ms": 316.91279998631217,
+      "is_deterministic": true,
+      "result_count": 0,
+      "recommendation_count": 0,
+      "is_empty": true,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 0,
+        "unique_types": 0,
+        "unique_sections": 0
+      },
+      "results": [],
+      "recommendations": []
+    },
+    {
+      "id": "filter_01",
+      "category": "filter_combinations",
+      "query": "cotton",
+      "latency_ms": 118.4470999869518,
+      "is_deterministic": true,
+      "result_count": 5,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 2,
+      "checks_passed": 2,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 3
+      },
+      "results": [
+        {
+          "id": "0372860001"
+        },
+        {
+          "id": "0408554004"
+        },
+        {
+          "id": "0487050025"
+        },
+        {
+          "id": "0488012035"
+        },
+        {
+          "id": "0507854004"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "filter_02",
+      "category": "filter_combinations",
+      "query": "",
+      "latency_ms": 107.09320000023581,
+      "is_deterministic": true,
+      "result_count": 5,
+      "recommendation_count": 0,
+      "is_empty": false,
+      "checks_total": 0,
+      "checks_passed": 0,
+      "constraint_score": 1.0,
+      "diversity": {
+        "unique_categories": 4,
+        "unique_types": 4,
+        "unique_sections": 4
+      },
+      "results": [
+        {
+          "id": "0111586001"
+        },
+        {
+          "id": "0188183001"
+        },
+        {
+          "id": "0254303059"
+        },
+        {
+          "id": "0292453009"
+        },
+        {
+          "id": "0292453011"
+        }
+      ],
+      "recommendations": []
+    }
+  ]
+}

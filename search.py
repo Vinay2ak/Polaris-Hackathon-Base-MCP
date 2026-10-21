@@ -8,8 +8,8 @@ from pathlib import Path
 from jsonschema import Draft202012Validator, ValidationError
 
 ROOT = Path(__file__).resolve().parent
-INPUT_SCHEMA = json.loads((ROOT / 'schemas/input.schema.json').read_text())
-OUTPUT_SCHEMA = json.loads((ROOT / 'schemas/output.schema.json').read_text())
+INPUT_SCHEMA = json.loads((ROOT / 'schemas/input.schema.json').read_text(encoding='utf-8'))
+OUTPUT_SCHEMA = json.loads((ROOT / 'schemas/output.schema.json').read_text(encoding='utf-8'))
 VALIDATOR = Draft202012Validator(INPUT_SCHEMA)
 STRING_FILTERS = ('category', 'product_type', 'color', 'audience', 'section', 'pattern')
 
