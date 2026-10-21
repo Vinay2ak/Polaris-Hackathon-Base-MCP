@@ -2,385 +2,1071 @@
   {
     "id": "plain_01",
     "category": "plain_keywords",
-    "args": { "query": "cotton top", "limit": 10 },
-    "expected": { "keywords": ["cotton", "top"], "product_type": "Vest top" }
+    "args": {
+      "query": "cotton top",
+      "limit": 10
+    },
+    "expected": {
+      "keywords": [
+        "cotton",
+        "top"
+      ],
+      "product_type": "Vest top"
+    }
   },
   {
     "id": "plain_02",
     "category": "plain_keywords",
-    "args": { "query": "black dress", "limit": 10 },
-    "expected": { "color": "Black", "product_type": "Dress" }
+    "args": {
+      "query": "black dress",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Black",
+      "product_type": "Dress"
+    }
   },
   {
     "id": "plain_03",
     "category": "plain_keywords",
-    "args": { "query": "blue denim jeans", "limit": 10 },
-    "expected": { "color": "Blue", "category": "Garment Lower body" }
+    "args": {
+      "query": "blue denim jeans",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Blue",
+      "category": "Garment Lower body"
+    }
   },
   {
     "id": "plain_04",
     "category": "plain_keywords",
-    "args": { "query": "white sneakers", "limit": 10 },
-    "expected": { "color": "White", "category": "Shoes" }
+    "args": {
+      "query": "white sneakers",
+      "limit": 10
+    },
+    "expected": {
+      "color": "White",
+      "category": "Shoes"
+    }
   },
   {
     "id": "plain_05",
     "category": "plain_keywords",
-    "args": { "query": "leather jacket", "limit": 10 },
-    "expected": { "product_type": "Jacket" }
+    "args": {
+      "query": "leather jacket",
+      "limit": 10
+    },
+    "expected": {
+      "product_type": "Jacket"
+    }
   },
   {
     "id": "plain_06",
     "category": "plain_keywords",
-    "args": { "query": "wool sweater", "limit": 10 },
-    "expected": { "product_type": "Sweater" }
+    "args": {
+      "query": "wool sweater",
+      "limit": 10
+    },
+    "expected": {
+      "product_type": "Sweater"
+    }
   },
   {
     "id": "typo_01",
     "category": "typos",
-    "args": { "query": "coton dres", "limit": 10 },
-    "expected": { "product_type": "Dress" }
+    "args": {
+      "query": "coton dres",
+      "limit": 10
+    },
+    "expected": {
+      "product_type": "Dress"
+    }
   },
   {
     "id": "typo_02",
     "category": "typos",
-    "args": { "query": "whie snakers", "limit": 10 },
-    "expected": { "color": "White", "category": "Shoes" }
+    "args": {
+      "query": "whie snakers",
+      "limit": 10
+    },
+    "expected": {
+      "color": "White",
+      "category": "Shoes"
+    }
   },
   {
     "id": "typo_03",
     "category": "typos",
-    "args": { "query": "blac t-shrt", "limit": 10 },
-    "expected": { "color": "Black", "product_type": "T-shirt" }
+    "args": {
+      "query": "blac t-shrt",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Black",
+      "product_type": "T-shirt"
+    }
   },
   {
     "id": "typo_04",
     "category": "typos",
-    "args": { "query": "blu denm jens", "limit": 10 },
-    "expected": { "color": "Blue" }
+    "args": {
+      "query": "blu denm jens",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Blue"
+    }
   },
   {
     "id": "typo_05",
     "category": "typos",
-    "args": { "query": "lether jackt", "limit": 10 },
-    "expected": { "product_type": "Jacket" }
+    "args": {
+      "query": "lether jackt",
+      "limit": 10
+    },
+    "expected": {
+      "product_type": "Jacket"
+    }
   },
   {
     "id": "typo_06",
     "category": "typos",
-    "args": { "query": "summr skrt", "limit": 10 },
-    "expected": { "product_type": "Skirt" }
+    "args": {
+      "query": "summr skrt",
+      "limit": 10
+    },
+    "expected": {
+      "product_type": "Skirt"
+    }
   },
   {
     "id": "hinglish_01",
     "category": "hinglish",
-    "args": { "query": "party ke liye black dress", "limit": 10 },
-    "expected": { "color": "Black", "product_type": "Dress" }
+    "args": {
+      "query": "party ke liye black dress",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Black",
+      "product_type": "Dress"
+    }
   },
   {
     "id": "hinglish_02",
     "category": "hinglish",
-    "args": { "query": "ladko ke liye formal white shirt", "limit": 10 },
-    "expected": { "color": "White", "audience": "Menswear" }
+    "args": {
+      "query": "ladko ke liye formal white shirt",
+      "limit": 10
+    },
+    "expected": {
+      "color": "White",
+      "audience": "Menswear"
+    }
   },
   {
     "id": "hinglish_03",
     "category": "hinglish",
-    "args": { "query": "garmi ke kapde cotton top", "limit": 10 },
-    "expected": { "keywords": ["cotton", "top"] }
+    "args": {
+      "query": "garmi ke kapde cotton top",
+      "limit": 10
+    },
+    "expected": {
+      "keywords": [
+        "cotton",
+        "top"
+      ]
+    }
   },
   {
     "id": "hinglish_04",
     "category": "hinglish",
-    "args": { "query": "running ke liye shoes", "limit": 10 },
-    "expected": { "category": "Shoes" }
+    "args": {
+      "query": "running ke liye shoes",
+      "limit": 10
+    },
+    "expected": {
+      "category": "Shoes"
+    }
   },
   {
     "id": "hinglish_05",
     "category": "hinglish",
-    "args": { "query": "saste black jeans under 1500", "limit": 10 },
-    "expected": { "color": "Black", "max_price": 1500 }
+    "args": {
+      "query": "saste black jeans under 1500",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Black",
+      "max_price": 1500
+    }
   },
   {
     "id": "hinglish_06",
     "category": "hinglish",
-    "args": { "query": "ladies ke liye sundar skirt", "limit": 10 },
-    "expected": { "product_type": "Skirt", "audience": "Ladieswear" }
+    "args": {
+      "query": "ladies ke liye sundar skirt",
+      "limit": 10
+    },
+    "expected": {
+      "product_type": "Skirt",
+      "audience": "Ladieswear"
+    }
   },
   {
     "id": "synonym_01",
     "category": "synonyms",
-    "args": { "query": "white kicks and black tee", "limit": 10 },
-    "expected": { "mixed": true }
+    "args": {
+      "query": "white kicks and black tee",
+      "limit": 10
+    },
+    "expected": {
+      "mixed": true
+    }
   },
   {
     "id": "synonym_02",
     "category": "synonyms",
-    "args": { "query": "trousers and warm jumper", "limit": 10 },
-    "expected": { "mixed": true }
+    "args": {
+      "query": "trousers and warm jumper",
+      "limit": 10
+    },
+    "expected": {
+      "mixed": true
+    }
   },
   {
     "id": "synonym_03",
     "category": "synonyms",
-    "args": { "query": "dark shades for summer", "limit": 10 },
-    "expected": { "category": "Accessories" }
+    "args": {
+      "query": "dark shades for summer",
+      "limit": 10
+    },
+    "expected": {
+      "category": "Accessories"
+    }
   },
   {
     "id": "synonym_04",
     "category": "synonyms",
-    "args": { "query": "leather purse for women", "limit": 10 },
-    "expected": { "category": "Accessories" }
+    "args": {
+      "query": "leather purse for women",
+      "limit": 10
+    },
+    "expected": {
+      "category": "Accessories"
+    }
   },
   {
     "id": "synonym_05",
     "category": "synonyms",
-    "args": { "query": "black ankle booties", "limit": 10 },
-    "expected": { "category": "Shoes" }
+    "args": {
+      "query": "black ankle booties",
+      "limit": 10
+    },
+    "expected": {
+      "category": "Shoes"
+    }
   },
   {
     "id": "synonym_06",
     "category": "synonyms",
-    "args": { "query": "winter coat for men", "limit": 10 },
-    "expected": { "audience": "Menswear" }
+    "args": {
+      "query": "winter coat for men",
+      "limit": 10
+    },
+    "expected": {
+      "audience": "Menswear"
+    }
   },
   {
     "id": "budget_01",
     "category": "prose_budgets",
-    "args": { "query": "cotton dress under 1500", "limit": 10 },
-    "expected": { "max_price": 1500, "product_type": "Dress" }
+    "args": {
+      "query": "cotton dress under 1500",
+      "limit": 10
+    },
+    "expected": {
+      "max_price": 1500,
+      "product_type": "Dress"
+    }
   },
   {
     "id": "budget_02",
     "category": "prose_budgets",
-    "args": { "query": "running shoes below INR 2000", "limit": 10 },
-    "expected": { "max_price": 2000, "category": "Shoes" }
+    "args": {
+      "query": "running shoes below INR 2000",
+      "limit": 10
+    },
+    "expected": {
+      "max_price": 2000,
+      "category": "Shoes"
+    }
   },
   {
     "id": "budget_03",
     "category": "prose_budgets",
-    "args": { "query": "jacket under 3000", "limit": 10 },
-    "expected": { "max_price": 3000, "product_type": "Jacket" }
+    "args": {
+      "query": "jacket under 3000",
+      "limit": 10
+    },
+    "expected": {
+      "max_price": 3000,
+      "product_type": "Jacket"
+    }
   },
   {
     "id": "budget_04",
     "category": "prose_budgets",
-    "args": { "query": "jeans between 1000 and 2000", "limit": 10 },
-    "expected": { "min_price": 1000, "max_price": 2000 }
+    "args": {
+      "query": "jeans between 1000 and 2000",
+      "limit": 10
+    },
+    "expected": {
+      "min_price": 1000,
+      "max_price": 2000
+    }
   },
   {
     "id": "budget_05",
     "category": "prose_budgets",
-    "args": { "query": "t-shirt less than 800", "limit": 10 },
-    "expected": { "max_price": 800, "product_type": "T-shirt" }
+    "args": {
+      "query": "t-shirt less than 800",
+      "limit": 10
+    },
+    "expected": {
+      "max_price": 800,
+      "product_type": "T-shirt"
+    }
   },
   {
     "id": "budget_06",
     "category": "prose_budgets",
-    "args": { "query": "black trousers max 1200", "limit": 10 },
-    "expected": { "max_price": 1200, "color": "Black" }
+    "args": {
+      "query": "black trousers max 1200",
+      "limit": 10
+    },
+    "expected": {
+      "max_price": 1200,
+      "color": "Black"
+    }
   },
   {
     "id": "constraint_01",
     "category": "color_gender_constraints",
-    "args": { "query": "red dress for women", "limit": 10 },
-    "expected": { "color": "Red", "audience": "Ladieswear", "product_type": "Dress" }
+    "args": {
+      "query": "red dress for women",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Red",
+      "audience": "Ladieswear",
+      "product_type": "Dress"
+    }
   },
   {
     "id": "constraint_02",
     "category": "color_gender_constraints",
-    "args": { "query": "blue formal shirt for men", "limit": 10 },
-    "expected": { "color": "Blue", "audience": "Menswear" }
+    "args": {
+      "query": "blue formal shirt for men",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Blue",
+      "audience": "Menswear"
+    }
   },
   {
     "id": "constraint_03",
     "category": "color_gender_constraints",
-    "args": { "query": "pink top for baby", "limit": 10 },
-    "expected": { "color": "Pink", "audience": "Baby" }
+    "args": {
+      "query": "pink top for baby",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Pink",
+      "audience": "Baby"
+    }
   },
   {
     "id": "constraint_04",
     "category": "color_gender_constraints",
-    "args": { "query": "yellow summer dress for girls", "limit": 10 },
-    "expected": { "color": "Yellow", "audience": "Children" }
+    "args": {
+      "query": "yellow summer dress for girls",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Yellow",
+      "audience": "Children"
+    }
   },
   {
     "id": "constraint_05",
     "category": "color_gender_constraints",
-    "args": { "query": "black suit for gentlemen", "limit": 10 },
-    "expected": { "color": "Black", "audience": "Menswear" }
+    "args": {
+      "query": "black suit for gentlemen",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Black",
+      "audience": "Menswear"
+    }
   },
   {
     "id": "constraint_06",
     "category": "color_gender_constraints",
-    "args": { "query": "white hoodie for ladies", "limit": 10 },
-    "expected": { "color": "White", "audience": "Ladieswear" }
+    "args": {
+      "query": "white hoodie for ladies",
+      "limit": 10
+    },
+    "expected": {
+      "color": "White",
+      "audience": "Ladieswear"
+    }
   },
   {
     "id": "occasion_01",
     "category": "occasion_intent",
-    "args": { "query": "outfit for a beach wedding", "limit": 10 },
-    "expected": { "non_empty": true }
+    "args": {
+      "query": "outfit for a beach wedding",
+      "limit": 10
+    },
+    "expected": {
+      "non_empty": true
+    }
   },
   {
     "id": "occasion_02",
     "category": "occasion_intent",
-    "args": { "query": "something comfortable for a lazy Sunday", "limit": 10 },
-    "expected": { "non_empty": true }
+    "args": {
+      "query": "something comfortable for a lazy Sunday",
+      "limit": 10
+    },
+    "expected": {
+      "non_empty": true
+    }
   },
   {
     "id": "occasion_03",
     "category": "occasion_intent",
-    "args": { "query": "elegant dress for dinner party", "limit": 10 },
-    "expected": { "product_type": "Dress" }
+    "args": {
+      "query": "elegant dress for dinner party",
+      "limit": 10
+    },
+    "expected": {
+      "product_type": "Dress"
+    }
   },
   {
     "id": "occasion_04",
     "category": "occasion_intent",
-    "args": { "query": "athletic wear for running in the gym", "limit": 10 },
-    "expected": { "non_empty": true }
+    "args": {
+      "query": "athletic wear for running in the gym",
+      "limit": 10
+    },
+    "expected": {
+      "non_empty": true
+    }
   },
   {
     "id": "occasion_05",
     "category": "occasion_intent",
-    "args": { "query": "formal business interview attire", "limit": 10 },
-    "expected": { "non_empty": true }
+    "args": {
+      "query": "formal business interview attire",
+      "limit": 10
+    },
+    "expected": {
+      "non_empty": true
+    }
   },
   {
     "id": "occasion_06",
     "category": "occasion_intent",
-    "args": { "query": "warm cozy outfit for cold winter snow", "limit": 10 },
-    "expected": { "non_empty": true }
+    "args": {
+      "query": "warm cozy outfit for cold winter snow",
+      "limit": 10
+    },
+    "expected": {
+      "non_empty": true
+    }
   },
   {
     "id": "complement_01",
     "category": "complementary_intent",
-    "args": { "query": "A dress for dinner under INR 2000 with a matching bag under INR 1000", "limit": 10, "include_recommendations": true },
-    "expected": { "recommendations_min": 1, "max_price": 2000 }
+    "args": {
+      "query": "A dress for dinner under INR 2000 with a matching bag under INR 1000",
+      "limit": 10,
+      "include_recommendations": true
+    },
+    "expected": {
+      "recommendations_min": 1,
+      "max_price": 2000
+    }
   },
   {
     "id": "complement_02",
     "category": "complementary_intent",
-    "args": { "query": "black cocktail dress with high heels", "limit": 10, "include_recommendations": true },
-    "expected": { "recommendations_min": 1, "color": "Black" }
+    "args": {
+      "query": "black cocktail dress with high heels",
+      "limit": 10,
+      "include_recommendations": true
+    },
+    "expected": {
+      "recommendations_min": 1,
+      "color": "Black"
+    }
   },
   {
     "id": "complement_03",
     "category": "complementary_intent",
-    "args": { "query": "formal suit for men with matching tie", "limit": 10, "include_recommendations": true },
-    "expected": { "recommendations_min": 1, "audience": "Menswear" }
+    "args": {
+      "query": "formal suit for men with matching tie",
+      "limit": 10,
+      "include_recommendations": true
+    },
+    "expected": {
+      "recommendations_min": 1,
+      "audience": "Menswear"
+    }
   },
   {
     "id": "complement_04",
     "category": "complementary_intent",
-    "args": { "query": "beach swimwear with sunglasses", "limit": 10, "include_recommendations": true },
-    "expected": { "recommendations_min": 1 }
+    "args": {
+      "query": "beach swimwear with sunglasses",
+      "limit": 10,
+      "include_recommendations": true
+    },
+    "expected": {
+      "recommendations_min": 1
+    }
   },
   {
     "id": "complement_05",
     "category": "complementary_intent",
-    "args": { "query": "casual denim jacket with a scarf", "limit": 10, "include_recommendations": true },
-    "expected": { "recommendations_min": 1 }
+    "args": {
+      "query": "casual denim jacket with a scarf",
+      "limit": 10,
+      "include_recommendations": true
+    },
+    "expected": {
+      "recommendations_min": 1
+    }
   },
   {
     "id": "complement_06",
     "category": "complementary_intent",
-    "args": { "query": "cotton skirt", "limit": 5, "include_recommendations": true },
-    "expected": { "recommendations_min": 1, "product_type": "Skirt" }
+    "args": {
+      "query": "cotton skirt",
+      "limit": 5,
+      "include_recommendations": true
+    },
+    "expected": {
+      "recommendations_min": 1,
+      "product_type": "Skirt"
+    }
   },
   {
     "id": "empty_01",
     "category": "empty_string",
-    "args": { "query": "", "limit": 10 },
-    "expected": { "non_empty": true }
+    "args": {
+      "query": "",
+      "limit": 10
+    },
+    "expected": {
+      "non_empty": true
+    }
   },
   {
     "id": "empty_02",
     "category": "empty_string",
-    "args": { "query": "   ", "limit": 10 },
-    "expected": { "non_empty": true }
+    "args": {
+      "query": "   ",
+      "limit": 10
+    },
+    "expected": {
+      "non_empty": true
+    }
   },
   {
     "id": "empty_03",
     "category": "empty_string",
-    "args": { "query": "\t\n  ", "limit": 5 },
-    "expected": { "non_empty": true }
+    "args": {
+      "query": "\t\n  ",
+      "limit": 5
+    },
+    "expected": {
+      "non_empty": true
+    }
   },
   {
     "id": "empty_04",
     "category": "empty_string",
-    "args": { "query": "", "filters": { "color": "Black" }, "limit": 10 },
-    "expected": { "color": "Black" }
+    "args": {
+      "query": "",
+      "filters": {
+        "color": "Black"
+      },
+      "limit": 10
+    },
+    "expected": {
+      "color": "Black"
+    }
   },
   {
     "id": "gibberish_01",
     "category": "gibberish",
-    "args": { "query": "spaceship engine", "limit": 10 },
-    "expected": { "must_be_empty": true }
+    "args": {
+      "query": "spaceship engine",
+      "limit": 10
+    },
+    "expected": {
+      "must_be_empty": true
+    }
   },
   {
     "id": "gibberish_02",
     "category": "gibberish",
-    "args": { "query": "quantum laptop computer", "limit": 10 },
-    "expected": { "must_be_empty": true }
+    "args": {
+      "query": "quantum laptop computer",
+      "limit": 10
+    },
+    "expected": {
+      "must_be_empty": true
+    }
   },
   {
     "id": "gibberish_03",
     "category": "gibberish",
-    "args": { "query": "pet elephant food", "limit": 10 },
-    "expected": { "must_be_empty": true }
+    "args": {
+      "query": "pet elephant food",
+      "limit": 10
+    },
+    "expected": {
+      "must_be_empty": true
+    }
   },
   {
     "id": "gibberish_04",
     "category": "gibberish",
-    "args": { "query": "diesel submarine propeller", "limit": 10 },
-    "expected": { "must_be_empty": true }
+    "args": {
+      "query": "diesel submarine propeller",
+      "limit": 10
+    },
+    "expected": {
+      "must_be_empty": true
+    }
   },
   {
     "id": "gibberish_05",
     "category": "gibberish",
-    "args": { "query": "xkzqwpl mnvytr jhgfds", "limit": 10 },
-    "expected": { "must_be_empty": true }
+    "args": {
+      "query": "xkzqwpl mnvytr jhgfds",
+      "limit": 10
+    },
+    "expected": {
+      "must_be_empty": true
+    }
   },
   {
     "id": "gibberish_06",
     "category": "gibberish",
-    "args": { "query": "nuclear hydraulic bulldozer cement", "limit": 10 },
-    "expected": { "must_be_empty": true }
+    "args": {
+      "query": "nuclear hydraulic bulldozer cement",
+      "limit": 10
+    },
+    "expected": {
+      "must_be_empty": true
+    }
   },
   {
     "id": "long_01",
     "category": "very_long_queries",
-    "args": { "query": "I am looking for a very elegant and high quality premium black evening dinner dress made of cotton or velvet that fits well for a formal gala event and is comfortable to wear all night under INR 3000", "limit": 10 },
-    "expected": { "color": "Black", "max_price": 3000, "product_type": "Dress" }
+    "args": {
+      "query": "I am looking for a very elegant and high quality premium black evening dinner dress made of cotton or velvet that fits well for a formal gala event and is comfortable to wear all night under INR 3000",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Black",
+      "max_price": 3000,
+      "product_type": "Dress"
+    }
   },
   {
     "id": "long_02",
     "category": "very_long_queries",
-    "args": { "query": "Looking for stylish comfortable everyday walking shoes or sneakers in white or black color with good cushioning for daily office commute and casual outings", "limit": 10 },
-    "expected": { "category": "Shoes" }
+    "args": {
+      "query": "Looking for stylish comfortable everyday walking shoes or sneakers in white or black color with good cushioning for daily office commute and casual outings",
+      "limit": 10
+    },
+    "expected": {
+      "category": "Shoes"
+    }
   },
   {
     "id": "long_03",
     "category": "very_long_queries",
-    "args": { "query": "Need a relaxed fit warm fleece hoodie and matching comfortable sweatpants for lounging at home on a cold rainy weekend with soft fabric", "limit": 10 },
-    "expected": { "non_empty": true }
+    "args": {
+      "query": "Need a relaxed fit warm fleece hoodie and matching comfortable sweatpants for lounging at home on a cold rainy weekend with soft fabric",
+      "limit": 10
+    },
+    "expected": {
+      "non_empty": true
+    }
   },
   {
     "id": "long_04",
     "category": "very_long_queries",
-    "args": { "query": "Searching for a formal crisp cotton white button-up shirt suitable for men to wear with a suit during corporate client meetings and summer business presentations", "limit": 10 },
-    "expected": { "color": "White", "audience": "Menswear" }
+    "args": {
+      "query": "Searching for a formal crisp cotton white button-up shirt suitable for men to wear with a suit during corporate client meetings and summer business presentations",
+      "limit": 10
+    },
+    "expected": {
+      "color": "White",
+      "audience": "Menswear"
+    }
   },
   {
     "id": "filter_01",
     "category": "filter_combinations",
-    "args": { "query": "cotton", "filters": { "color": "Black", "max_price": 2000 }, "sort_by": "price", "sort_order": "asc", "limit": 5 },
-    "expected": { "color": "Black", "max_price": 2000 }
+    "args": {
+      "query": "cotton",
+      "filters": {
+        "color": "Black",
+        "max_price": 2000
+      },
+      "sort_by": "price",
+      "sort_order": "asc",
+      "limit": 5
+    },
+    "expected": {
+      "color": "Black",
+      "max_price": 2000
+    }
   },
   {
     "id": "filter_02",
     "category": "filter_combinations",
-    "args": { "query": "", "filters": { "min_rating": 4.5, "min_review_count": 5 }, "sort_by": "rating", "sort_order": "desc", "limit": 5 },
-    "expected": { "min_rating": 4.5 }
+    "args": {
+      "query": "",
+      "filters": {
+        "min_rating": 4.5,
+        "min_review_count": 5
+      },
+      "sort_by": "rating",
+      "sort_order": "desc",
+      "limit": 5
+    },
+    "expected": {
+      "min_rating": 4.5
+    }
+  },
+  {
+    "id": "plain_07",
+    "category": "plain_keywords",
+    "args": {
+      "query": "red silk dress",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Red",
+      "product_type": "Dress"
+    }
+  },
+  {
+    "id": "plain_08",
+    "category": "plain_keywords",
+    "args": {
+      "query": "linen trousers",
+      "limit": 10
+    },
+    "expected": {
+      "category": "Garment Lower body"
+    }
+  },
+  {
+    "id": "plain_09",
+    "category": "plain_keywords",
+    "args": {
+      "query": "striped polo shirt",
+      "limit": 10
+    },
+    "expected": {
+      "product_type": "Polo shirt"
+    }
+  },
+  {
+    "id": "plain_10",
+    "category": "plain_keywords",
+    "args": {
+      "query": "winter wool scarf",
+      "limit": 10
+    },
+    "expected": {
+      "category": "Accessories"
+    }
+  },
+  {
+    "id": "plain_11",
+    "category": "plain_keywords",
+    "args": {
+      "query": "running sports shorts",
+      "limit": 10
+    },
+    "expected": {
+      "product_type": "Shorts"
+    }
+  },
+  {
+    "id": "plain_12",
+    "category": "plain_keywords",
+    "args": {
+      "query": "denim jacket blue",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Blue",
+      "product_type": "Jacket"
+    }
+  },
+  {
+    "id": "typo_07",
+    "category": "typos",
+    "args": {
+      "query": "coton pyjamas",
+      "limit": 10
+    },
+    "expected": {
+      "non_empty": true
+    }
+  },
+  {
+    "id": "typo_08",
+    "category": "typos",
+    "args": {
+      "query": "blak jogers",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Black"
+    }
+  },
+  {
+    "id": "hinglish_07",
+    "category": "hinglish",
+    "args": {
+      "query": "sundar red dress party ke liye",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Red",
+      "product_type": "Dress"
+    }
+  },
+  {
+    "id": "hinglish_08",
+    "category": "hinglish",
+    "args": {
+      "query": "garmi ke cotton shorts",
+      "limit": 10
+    },
+    "expected": {
+      "product_type": "Shorts"
+    }
+  },
+  {
+    "id": "hinglish_09",
+    "category": "hinglish",
+    "args": {
+      "query": "office ke liye formal white shirt",
+      "limit": 10
+    },
+    "expected": {
+      "color": "White"
+    }
+  },
+  {
+    "id": "hinglish_10",
+    "category": "hinglish",
+    "args": {
+      "query": "ladko ke liye blue jeans under 2000",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Blue",
+      "max_price": 2000,
+      "audience": "Menswear"
+    }
+  },
+  {
+    "id": "synonym_07",
+    "category": "synonyms",
+    "args": {
+      "query": "warm jumper for winter",
+      "limit": 10
+    },
+    "expected": {
+      "non_empty": true
+    }
+  },
+  {
+    "id": "synonym_08",
+    "category": "synonyms",
+    "args": {
+      "query": "stylish dark shades",
+      "limit": 10
+    },
+    "expected": {
+      "category": "Accessories"
+    }
+  },
+  {
+    "id": "synonym_09",
+    "category": "synonyms",
+    "args": {
+      "query": "white kicks for running",
+      "limit": 10
+    },
+    "expected": {
+      "color": "White",
+      "category": "Shoes"
+    }
+  },
+  {
+    "id": "synonym_10",
+    "category": "synonyms",
+    "args": {
+      "query": "leather purse for ladies",
+      "limit": 10
+    },
+    "expected": {
+      "audience": "Ladieswear"
+    }
+  },
+  {
+    "id": "budget_07",
+    "category": "prose_budgets",
+    "args": {
+      "query": "summer dress under 1000",
+      "limit": 10
+    },
+    "expected": {
+      "max_price": 1000,
+      "product_type": "Dress"
+    }
+  },
+  {
+    "id": "budget_08",
+    "category": "prose_budgets",
+    "args": {
+      "query": "sneakers below 2500",
+      "limit": 10
+    },
+    "expected": {
+      "max_price": 2500,
+      "category": "Shoes"
+    }
+  },
+  {
+    "id": "budget_09",
+    "category": "prose_budgets",
+    "args": {
+      "query": "formal trousers between 800 and 1500",
+      "limit": 10
+    },
+    "expected": {
+      "min_price": 800,
+      "max_price": 1500
+    }
+  },
+  {
+    "id": "budget_10",
+    "category": "prose_budgets",
+    "args": {
+      "query": "hoodie less than 2000",
+      "limit": 10
+    },
+    "expected": {
+      "max_price": 2000
+    }
+  },
+  {
+    "id": "constraint_07",
+    "category": "color_gender_constraints",
+    "args": {
+      "query": "black formal blazer for men",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Black",
+      "audience": "Menswear"
+    }
+  },
+  {
+    "id": "constraint_08",
+    "category": "color_gender_constraints",
+    "args": {
+      "query": "pink floral dress for women",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Pink",
+      "audience": "Ladieswear",
+      "product_type": "Dress"
+    }
+  },
+  {
+    "id": "constraint_09",
+    "category": "color_gender_constraints",
+    "args": {
+      "query": "blue cotton romper for baby",
+      "limit": 10
+    },
+    "expected": {
+      "color": "Blue"
+    }
+  },
+  {
+    "id": "constraint_10",
+    "category": "color_gender_constraints",
+    "args": {
+      "query": "white casual shirt for gentlemen",
+      "limit": 10
+    },
+    "expected": {
+      "color": "White",
+      "audience": "Menswear"
+    }
+  },
+  {
+    "id": "filter_03",
+    "category": "filter_combinations",
+    "args": {
+      "query": "linen shirt",
+      "filters": {
+        "color": "White",
+        "max_price": 1800
+      },
+      "limit": 10
+    },
+    "expected": {
+      "color": "White",
+      "max_price": 1800
+    }
+  },
+  {
+    "id": "filter_04",
+    "category": "filter_combinations",
+    "args": {
+      "query": "leather shoes",
+      "filters": {
+        "color": "Black"
+      },
+      "limit": 10
+    },
+    "expected": {
+      "color": "Black",
+      "category": "Shoes"
+    }
   }
 ]
