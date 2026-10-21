@@ -24,6 +24,80 @@ STOP_OR_HELPER_WORDS = {
     'i', 'am', 'looking', 'searching', 'need', 'want', 'please', 'show', 'find'
 }
 
+SYNONYMS = {
+    'kapde': 'clothing',
+    'kapda': 'clothing',
+    'garmi': 'summer',
+    'saste': 'budget',
+    'sasta': 'budget',
+    'ladko': 'men',
+    'ladka': 'men',
+    'ladki': 'women',
+    'mahilaon': 'women',
+    'sundar': 'beautiful',
+    'kicks': 'sneakers',
+    'kick': 'sneakers',
+    'tee': 't-shirt',
+    'tees': 't-shirt',
+    'jumper': 'sweater',
+    'booties': 'boots',
+    'bootie': 'boots',
+    'shades': 'sunglasses',
+    'purse': 'bag',
+    'togs': 'swimwear',
+    'attire': 'clothing',
+}
+
+COMPLEMENTARY_CATEGORY_MAP = {
+    'Garment Upper body': ['Garment Lower body', 'Shoes', 'Accessories', 'Bags'],
+    'Garment Lower body': ['Garment Upper body', 'Shoes', 'Accessories', 'Bags'],
+    'Garment Full body': ['Shoes', 'Accessories', 'Bags'],
+    'Shoes': ['Garment Lower body', 'Garment Upper body', 'Accessories', 'Bags'],
+    'Accessories': ['Garment Upper body', 'Garment Lower body', 'Shoes'],
+    'Bags': ['Garment Upper body', 'Garment Lower body', 'Shoes'],
+    'Underwear': ['Nightwear', 'Socks & Tights'],
+    'Nightwear': ['Underwear', 'Socks & Tights'],
+    'Swimwear': ['Accessories', 'Shoes'],
+}
+
+
+def parse_prose_constraints(query_str):
+    inferred = {}
+    cleaned = query_str
+
+    # Range: between X and Y
+    m = re.search(r'\b(?:between|from)\s*(?:inr|rs\.?|₹)?\s*(\d+)\s*(?:and|to)\s*(?:inr|rs\.?|₹)?\s*(\d+)\b', cleaned, re.IGNORECASE)
+    if m:
+        inferred['min_price'] = int(m.group(1))
+        inferred['max_price'] = int(m.group(2))
+        cleaned = cleaned[:m.start()] + ' ' + cleaned[m.end():]
+
+    # Max price: under X, below X, less than X, max X
+    m = re.search(r'\b(?:under|below|less than|max|up to|cheaper than)\s*(?:inr|rs\.?|₹)?\s*(\d+)\b', cleaned, re.IGNORECASE)
+    if m and 'max_price' not in inferred:
+        inferred['max_price'] = int(m.group(1))
+        cleaned = cleaned[:m.start()] + ' ' + cleaned[m.end():]
+
+    # Min price: above X, over X, more than X, min X
+    m = re.search(r'\b(?:above|over|more than|min|at least)\s*(?:inr|rs\.?|₹)?\s*(\d+)\b', cleaned, re.IGNORECASE)
+    if m and 'min_price' not in inferred:
+        inferred['min_price'] = int(m.group(1))
+        cleaned = cleaned[:m.start()] + ' ' + cleaned[m.end():]
+
+    # Hindi budget: (\d+) se kam / (\d+) ke andar
+    m = re.search(r'\b(\d+)\s*(?:se kam|ke andar)\b', cleaned, re.IGNORECASE)
+    if m and 'max_price' not in inferred:
+        inferred['max_price'] = int(m.group(1))
+        cleaned = cleaned[:m.start()] + ' ' + cleaned[m.end():]
+
+    # Audience extraction
+    if re.search(r'\b(?:for\s+)?(?:women|ladies|woman|female|mahilaon)\b', cleaned, re.IGNORECASE):
+        inferred['audience'] = 'Ladieswear'
+    elif re.search(r'\b(?:for\s+)?(?:men|man|gentlemen|male|ladko)\b', cleaned, re.IGNORECASE):
+        inferred['audience'] = 'Menswear'
+
+    return inferred, cleaned.strip()
+
 
 def validate_arguments(arguments):
     # Reject non-JSON floating point values even when called directly from Python.
@@ -62,6 +136,13 @@ class Catalog:
         self.vocab_by_len = {}
         for w in self.target_vocab:
             self.vocab_by_len.setdefault(len(w), []).append(w)
+
+        # Pre-group products by category for fast, relevant recommendations
+        self.products_by_category = {}
+        for p in self.products:
+            cat = p.get('category')
+            if cat:
+                self.products_by_category.setdefault(cat, []).append(p)
 
         corpus = [' '.join(str(p.get(k) or '') for k in ('name', 'description', *STRING_FILTERS)) for p in self.products]
         if corpus:
@@ -142,8 +223,46 @@ class Catalog:
         return float(matches[0]) if len(matches) > 0 else 0.0
 
     def recommend(self, results, arguments):
-        """Student extension: return up to five complementary product references."""
-        return []
+        """Return up to five complementary product references from different categories."""
+        if not results or not arguments.get('include_recommendations', False):
+            return []
+        
+        result_pids = [r['id'] for r in results]
+        result_pid_set = set(result_pids)
+        result_products = [self.products[self.id_to_idx[pid]] for pid in result_pids if pid in self.id_to_idx]
+        if not result_products:
+            return []
+
+        result_categories = {p.get('category') for p in result_products if p.get('category')}
+        recommendations = []
+        rec_ids = set()
+
+        for res_p in result_products:
+            res_cat = res_p.get('category')
+            if not res_cat:
+                continue
+            complementary_targets = COMPLEMENTARY_CATEGORY_MAP.get(res_cat, [])
+            for target_cat in complementary_targets:
+                if target_cat in result_categories:
+                    continue  # Rule: never same category as results!
+                candidates = self.products_by_category.get(target_cat, [])
+                # Match audience if possible
+                aud = res_p.get('audience')
+                matching_aud = [c for c in candidates if c.get('audience') == aud and c['id'] not in result_pid_set and c['id'] not in rec_ids]
+                pool = matching_aud if matching_aud else [c for c in candidates if c['id'] not in result_pid_set and c['id'] not in rec_ids]
+                if pool:
+                    # Pick highest rated or first
+                    best = max(pool[:20], key=lambda x: (x['rating']['average'] or 0, x['rating']['count']))
+                    rec_ids.add(best['id'])
+                    reason = f"Pair with {res_p.get('product_type') or 'item'} as a complementary {target_cat.lower()} match."
+                    recommendations.append({
+                        'id': best['id'],
+                        'for_product_id': res_p['id'],
+                        'reason': reason
+                    })
+                    if len(recommendations) >= 5:
+                        return recommendations
+        return recommendations
 
     @staticmethod
     def matches(product, filters):
@@ -161,19 +280,33 @@ class Catalog:
     def search(self, arguments):
         validate_arguments(arguments)
         raw_query = arguments.get('query', '').strip()
-        query_str = self.correct_query(raw_query) if raw_query else ''
-        q_words = tokens(query_str) if query_str else ()
-        filters = arguments.get('filters', {})
+        explicit_filters = arguments.get('filters', {})
+
+        # Extract prose constraints (budget, audience) without overriding explicit filters
+        inferred_filters, clean_query = parse_prose_constraints(raw_query) if raw_query else ({}, '')
+        filters = dict(inferred_filters)
+        filters.update(explicit_filters)  # Explicit filters take precedence!
+
+        # Correct typos
+        corrected_query = self.correct_query(clean_query) if clean_query else ''
+
+        # Apply synonyms
+        if corrected_query:
+            words = tokens(corrected_query)
+            expanded = [SYNONYMS.get(w, w) for w in words]
+            corrected_query = ' '.join(filter(None, expanded))
+
+        q_words = tokens(corrected_query) if corrected_query else ()
         candidates = [p for p in self.products if self.matches(p, filters)]
         scores = {}
-        if query_str and self.retriever and len(self.products) > 0:
+        if corrected_query and self.retriever and len(self.products) > 0:
             content_words = [w for w in q_words if w not in STOP_OR_HELPER_WORDS and not w.isdigit()]
             vocab = self.retriever.vocab_dict
             unknown_words = [w for w in content_words if w not in vocab]
             if content_words and (len(unknown_words) == len(content_words) or (len(content_words) <= 3 and len(unknown_words) > 0)):
                 candidates = []
             else:
-                q_tokens = bm25s.tokenize([query_str])
+                q_tokens = bm25s.tokenize([corrected_query])
                 if q_tokens and len(q_tokens[0]) > 0:
                     docs, score_arr = self.retriever.retrieve(q_tokens, k=len(self.products))
                     s = score_arr[0]
@@ -199,7 +332,7 @@ class Catalog:
         sort_by = arguments.get('sort_by', 'relevance')
         sort_order = arguments.get('sort_order', 'desc')
         if sort_by == 'relevance':
-            if query_str:
+            if corrected_query:
                 if sort_order == 'asc':
                     candidates.sort(key=lambda p: (scores[p['id']], p['id']))
                 else:
