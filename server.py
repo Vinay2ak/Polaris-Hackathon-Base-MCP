@@ -34,7 +34,7 @@ async def call_tool(name, arguments):
     return await anyio.to_thread.run_sync(catalog.search, arguments)
 
 
-allowed_hosts_env = os.getenv('MCP_ALLOWED_HOSTS', 'localhost:*,127.0.0.1:*,[::1]:*,delay-fanciness-mutate.ngrok-free.dev,delay-fanciness-mutate.ngrok-free.dev:*')
+allowed_hosts_env = os.getenv('MCP_ALLOWED_HOSTS', 'localhost:*,127.0.0.1:*,[::1]:*,delay-fanciness-mutate.ngrok-free.dev,delay-fanciness-mutate.ngrok-free.dev:*,dummy-mcp.01m5erq7wn81nf6mhfpqkjb0ka.apps.springwinter.dev,dummy-mcp.01m5erq7wn81nf6mhfpqkjb0ka.apps.springwinter.dev:*')
 allowed_hosts = [h.strip() for h in allowed_hosts_env.split(',') if h.strip()]
 enable_dns = '*' not in allowed_hosts
 
