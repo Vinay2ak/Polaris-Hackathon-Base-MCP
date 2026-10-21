@@ -5,3 +5,4 @@ __pycache__/
 .DS_Store
 scratch/
 data/embeddings.npy
+data/embeddings_f32.npy

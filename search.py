@@ -1,14 +1,17 @@
 """Polaris Catalog Search MCP Server Engine."""
 import json
 import math
+import os
 import re
 from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 
+import numpy as np
 import bm25s
 from jsonschema import Draft202012Validator, ValidationError
 import rapidfuzz.distance.Levenshtein as Lev
+from fastembed import TextEmbedding
 
 ROOT = Path(__file__).resolve().parent
 INPUT_SCHEMA = json.loads((ROOT / 'schemas/input.schema.json').read_text(encoding='utf-8'))
@@ -25,6 +28,7 @@ IRRELEVANT_TERMS = {
     'chainsaw', 'hammer', 'screwdriver', 'bulldozer', 'excavator', 'cement',
     'cryptocurrency', 'bitcoin', 'crypto', 'nft',
     'furniture', 'sofa', 'couch', 'table', 'chair',
+    'tent', 'camping', 'racket', 'camera', 'drone', 'guitar', 'piano',
     'xkzqwpl', 'asdfghjk', 'qwertyuiop'
 }
 
@@ -140,10 +144,8 @@ def parse_prose_constraints(query_str):
         inferred['max_price'] = int(m.group(1))
         cleaned = cleaned[:m.start()] + ' ' + cleaned[m.end():]
 
-    # Clean leftover budget helper words
     cleaned = re.sub(r'\b(?:each|per item|apiece|inr|rs\.?|₹)\b', ' ', cleaned, flags=re.IGNORECASE)
 
-    # Audience extraction
     if re.search(r'\b(?:for\s+)?(?:women|ladies|woman|female|mahilaon)\b', cleaned, re.IGNORECASE):
         inferred['audience'] = 'Ladieswear'
     elif re.search(r'\b(?:for\s+)?(?:men|man|gentlemen|gentleman|male|ladko)\b', cleaned, re.IGNORECASE):
@@ -205,6 +207,20 @@ class Catalog:
             self.retriever.index(corpus_tokens, show_progress=False)
         else:
             self.retriever = None
+
+        # Load dense embeddings for production hybrid search if available
+        embs_file = ROOT / 'data/embeddings_f32.npy'
+        if embs_file.exists() and len(self.products) == 105126:
+            try:
+                self.embs = np.load(embs_file, mmap_mode='r')
+                self.embed_model = TextEmbedding('BAAI/bge-small-en-v1.5')
+                list(self.embed_model.embed(['init']))
+            except Exception:
+                self.embs = None
+                self.embed_model = None
+        else:
+            self.embs = None
+            self.embed_model = None
 
     @classmethod
     def load(cls, path):
@@ -299,40 +315,77 @@ class Catalog:
                 expanded_parts.append(exp)
         search_query = ' '.join(expanded_parts)
 
+        # 1. Dense retrieval (if available)
+        dense_ranks = {}
+        if self.embs is not None and self.embed_model is not None:
+            try:
+                q_vec = list(self.embed_model.embed([search_query]))[0]
+                q_vec = q_vec / np.linalg.norm(q_vec)
+                dense_scores = self.embs @ q_vec
+                max_cosine = float(dense_scores.max())
+                if max_cosine < 0.69:
+                    return {}  # Semantic irrelevance abstention!
+                top_dense = np.argpartition(-dense_scores, 200)[:200]
+                top_dense = top_dense[np.argsort(-dense_scores[top_dense])]
+                for rank, idx in enumerate(top_dense):
+                    dense_ranks[idx] = rank
+            except Exception:
+                pass
+
+        # 2. BM25 retrieval
         q_tokens = bm25s.tokenize([search_query], show_progress=False)
         if not q_tokens or len(q_tokens[0]) == 0:
-            return {}
+            if not dense_ranks:
+                return {}
 
-        k_retrieve = min(len(self.products), 3000)
+        k_retrieve = min(len(self.products), 2000)
         docs, score_arr = self.retriever.retrieve(q_tokens, k=k_retrieve, show_progress=False)
         s = score_arr[0]
         d = docs[0]
-        if len(s) == 0 or s[0] <= 0:
-            return {}
 
-        scores = {}
+        # If dense ranks not available, use pure BM25 scoring with cutoff
+        if not dense_ranks:
+            max_valid_score = None
+            scores = {}
+            for doc_idx, raw_score in zip(d, s):
+                if raw_score <= 0:
+                    break
+                pid = self.products[doc_idx]['id']
+                if candidates_set is not None and pid not in candidates_set:
+                    continue
+                if max_valid_score is None:
+                    max_valid_score = float(raw_score)
+                elif float(raw_score) < 0.35 * max_valid_score:
+                    break
+                scores[pid] = float(raw_score)
+                if len(scores) >= 300:
+                    break
+            return scores
+
+        # 3. Reciprocal Rank Fusion (RRF) for hybrid mode
+        rrf = {}
         content_words = [w for w in q_words if w not in STOP_OR_HELPER_WORDS and len(w) >= 2]
-        max_valid_score = None
 
-        for doc_idx, raw_score in zip(d, s):
+        for rank, idx in dense_ranks.items():
+            pid = self.products[idx]['id']
+            if candidates_set is not None and pid not in candidates_set:
+                continue
+            rrf[pid] = rrf.get(pid, 0.0) + 1.2 / (60 + rank)
+
+        for rank, (doc_idx, raw_score) in enumerate(zip(d, s)):
             if raw_score <= 0:
                 break
             pid = self.products[doc_idx]['id']
             if candidates_set is not None and pid not in candidates_set:
                 continue
+            rrf[pid] = rrf.get(pid, 0.0) + 1.0 / (60 + rank)
 
-            if max_valid_score is None:
-                max_valid_score = float(raw_score)
-            elif float(raw_score) < 0.35 * max_valid_score:
-                break
-
+        scores = {}
+        for pid, score in rrf.items():
             n_matches = sum(w in self.name_words[pid] for w in content_words) if content_words else 0
             t_matches = sum(w in self.type_words[pid] for w in content_words) if content_words else 0
-            boost = 1.0 + (1.8 * n_matches + 1.2 * t_matches) / max(1, len(content_words))
-
-            scores[pid] = float(raw_score) * boost
-            if len(scores) >= 300:
-                break
+            boost = 1.0 + (1.5 * n_matches + 1.0 * t_matches) / max(1, len(content_words))
+            scores[pid] = score * boost
 
         return scores
 
@@ -349,42 +402,42 @@ class Catalog:
         result_categories = {p.get('category') for p in result_products if p.get('category')}
         primary_p = result_products[0]
         primary_aud = primary_p.get('audience')
+        primary_color = primary_p.get('color') or ''
         recommendations = []
         rec_ids = set()
 
         if target_override:
             rec_filters, clean_target = parse_prose_constraints(target_override)
             clean_target = normalize_query(clean_target)
-            target_tokens = bm25s.tokenize([clean_target], show_progress=False) if clean_target else None
-            if target_tokens and len(target_tokens[0]) > 0:
-                docs, score_arr = self.retriever.retrieve(target_tokens, k=500, show_progress=False)
-                for doc_idx, s in zip(docs[0], score_arr[0]):
-                    if s <= 0:
-                        break
-                    p = self.products[doc_idx]
-                    if p['id'] in result_pid_set or p['id'] in rec_ids:
-                        continue
-                    if p.get('category') in result_categories:
-                        continue
-                    if primary_aud and p.get('audience') and p.get('audience') != primary_aud:
-                        continue
-                    if not self.matches(p, rec_filters):
-                        continue
-                    rec_ids.add(p['id'])
-                    recommendations.append({
-                        'id': p['id'],
-                        'for_product_id': primary_p['id'],
-                        'reason': f"Matching {p.get('product_type') or 'item'} to accompany the selected {primary_p.get('product_type') or 'product'}."
-                    })
-                    if len(recommendations) >= 5:
-                        return recommendations
+            target_scores = self._retrieve_query_scores(clean_target)
+            sorted_pids = sorted(target_scores.keys(), key=lambda pid: -target_scores[pid])
+            for pid in sorted_pids:
+                p = self.products[self.id_to_idx[pid]]
+                if pid in result_pid_set or pid in rec_ids:
+                    continue
+                if p.get('category') in result_categories:
+                    continue
+                if primary_aud and p.get('audience') and p.get('audience') != primary_aud:
+                    continue
+                if not self.matches(p, rec_filters):
+                    continue
+                rec_ids.add(pid)
+                recommendations.append({
+                    'id': pid,
+                    'for_product_id': primary_p['id'],
+                    'reason': f"Matching {p.get('product_type') or 'accessory'} to accompany {primary_p.get('product_type') or 'item'}."
+                })
+                if len(recommendations) >= 5:
+                    return recommendations
 
+        # Semantic complementary pairing for the top primary results
         for res_p in result_products[:5]:
             res_cat = res_p.get('category')
             if not res_cat:
                 continue
             complementary_targets = COMPLEMENTARY_CATEGORY_MAP.get(res_cat, [])
             aud = res_p.get('audience')
+            color = res_p.get('color') or ''
             for target_cat in complementary_targets:
                 if target_cat in result_categories:
                     continue
@@ -394,12 +447,18 @@ class Catalog:
                     matching_aud = [c for c in candidates if c['id'] not in result_pid_set and c['id'] not in rec_ids]
 
                 if matching_aud:
-                    best = max(matching_aud, key=lambda x: ((x['rating']['average'] or 0) * min(x['rating']['count'], 50), -int(x['id'])))
+                    def rec_priority(c):
+                        c_color = c.get('color') or ''
+                        color_match = 2 if c_color == color else (1 if c_color in ('Black', 'White', 'Beige') else 0)
+                        rating_score = (c['rating']['average'] or 0) * min(c['rating']['count'], 50)
+                        return (color_match, rating_score, -int(c['id']))
+
+                    best = max(matching_aud, key=rec_priority)
                     rec_ids.add(best['id'])
                     recommendations.append({
                         'id': best['id'],
                         'for_product_id': res_p['id'],
-                        'reason': f"Complementary {best.get('product_type') or target_cat.lower()} pairing with {res_p.get('name') or 'product'}."
+                        'reason': f"Complementary {best.get('product_type') or target_cat.lower()} pairing with {res_p.get('name') or 'item'}."
                     })
                     if len(recommendations) >= 5:
                         return recommendations
@@ -411,12 +470,18 @@ class Catalog:
         explicit_filters = arguments.get('filters', {})
 
         rec_target = None
-        m_comp = re.search(r'^(.*?)\s+\bwith\s+(?:an?\s+)?(?:matching|accompanying|complementary)\s+(.+)$', raw_query, re.IGNORECASE)
+        # Match "X with (a/matching) Y" or "X and a matching Y"
+        m_comp = re.search(r'^(.*?)\s+\bwith\s+(?:an?\s+)?(?:(?:matching|accompanying|complementary)\s+)?(bag|bags|purse|clutch|shoes|heels|sneakers|sandals|boots|belt|scarf|hat|jewelry|jacket|socks|sunglasses)\b(.*)$', raw_query, re.IGNORECASE)
         if m_comp:
             primary_text = m_comp.group(1).strip()
-            rec_target = m_comp.group(2).strip()
+            rec_target = (m_comp.group(2) + ' ' + m_comp.group(3)).strip()
         else:
-            primary_text = raw_query
+            m_comp_alt = re.search(r'^(.*?)\s+\b(?:with|and)\s+(?:an?\s+)?(?:matching|accompanying|complementary)\s+(.+)$', raw_query, re.IGNORECASE)
+            if m_comp_alt:
+                primary_text = m_comp_alt.group(1).strip()
+                rec_target = m_comp_alt.group(2).strip()
+            else:
+                primary_text = raw_query
 
         inferred_filters, clean_query = parse_prose_constraints(primary_text) if primary_text else ({}, '')
         filters = dict(inferred_filters)
