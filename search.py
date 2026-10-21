@@ -126,6 +126,9 @@ class Catalog:
             p['id']: set(tokens(' '.join(str(p.get(k) or '') for k in
                 ('name', 'description', *STRING_FILTERS)))) for p in self.products
         }
+        self.name_words = {p['id']: set(tokens(p.get('name') or '')) for p in self.products}
+        self.type_words = {p['id']: set(tokens(p.get('product_type') or '')) for p in self.products}
+
         self.word_counts = Counter()
         for p in self.products:
             for w in self.words[p['id']]:
@@ -137,7 +140,6 @@ class Catalog:
         for w in self.target_vocab:
             self.vocab_by_len.setdefault(len(w), []).append(w)
 
-        # Pre-group products by category for fast, relevant recommendations
         self.products_by_category = {}
         for p in self.products:
             cat = p.get('category')
@@ -222,11 +224,11 @@ class Catalog:
         matches = scores[0][docs[0] == idx]
         return float(matches[0]) if len(matches) > 0 else 0.0
 
-    def recommend(self, results, arguments):
+    def recommend(self, results, arguments, target_override=None):
         """Return up to five complementary product references from different categories."""
         if not results or not arguments.get('include_recommendations', False):
             return []
-        
+
         result_pids = [r['id'] for r in results]
         result_pid_set = set(result_pids)
         result_products = [self.products[self.id_to_idx[pid]] for pid in result_pids if pid in self.id_to_idx]
@@ -237,6 +239,32 @@ class Catalog:
         recommendations = []
         rec_ids = set()
 
+        # If a specific complementary item was requested in the query (e.g. 'with a matching bag')
+        if target_override:
+            rec_filters, clean_target = parse_prose_constraints(target_override)
+            target_tokens = bm25s.tokenize([clean_target]) if clean_target else None
+            if target_tokens and len(target_tokens[0]) > 0:
+                docs, score_arr = self.retriever.retrieve(target_tokens, k=100)
+                primary_p = result_products[0]
+                for doc_idx, s in zip(docs[0], score_arr[0]):
+                    if s <= 0:
+                        break
+                    p = self.products[doc_idx]
+                    if p['id'] in result_pid_set or p['id'] in rec_ids:
+                        continue
+                    if p.get('category') in result_categories:
+                        continue  # Rule: never same category as results!
+                    if not self.matches(p, rec_filters):
+                        continue
+                    rec_ids.add(p['id'])
+                    recommendations.append({
+                        'id': p['id'],
+                        'for_product_id': primary_p['id'],
+                        'reason': f"Matching {p.get('product_type') or 'item'} pairing with {primary_p.get('name') or 'item'}."
+                    })
+                    if len(recommendations) >= 5:
+                        return recommendations
+
         for res_p in result_products:
             res_cat = res_p.get('category')
             if not res_cat:
@@ -246,12 +274,10 @@ class Catalog:
                 if target_cat in result_categories:
                     continue  # Rule: never same category as results!
                 candidates = self.products_by_category.get(target_cat, [])
-                # Match audience if possible
                 aud = res_p.get('audience')
                 matching_aud = [c for c in candidates if c.get('audience') == aud and c['id'] not in result_pid_set and c['id'] not in rec_ids]
                 pool = matching_aud if matching_aud else [c for c in candidates if c['id'] not in result_pid_set and c['id'] not in rec_ids]
                 if pool:
-                    # Pick highest rated or first
                     best = max(pool[:20], key=lambda x: (x['rating']['average'] or 0, x['rating']['count']))
                     rec_ids.add(best['id'])
                     reason = f"Pair with {res_p.get('product_type') or 'item'} as a complementary {target_cat.lower()} match."
@@ -277,13 +303,70 @@ class Catalog:
                      (average is not None and average >= filters['min_rating']))
                 and product['rating']['count'] >= filters.get('min_review_count', 0))
 
+    def _retrieve_query_scores(self, query_str, candidates_set=None):
+        """Retrieve BM25 scores with Name and Product Type boosts for semantic ranking."""
+        if not query_str or not self.retriever or len(self.products) == 0:
+            return {}
+        q_words = tokens(query_str)
+        content_words = [w for w in q_words if w not in STOP_OR_HELPER_WORDS and not w.isdigit()]
+        vocab = self.retriever.vocab_dict
+        unknown_words = [w for w in content_words if w not in vocab]
+        if content_words and (len(unknown_words) == len(content_words) or (len(content_words) <= 3 and len(unknown_words) > 0)):
+            return {}
+
+        q_tokens = bm25s.tokenize([query_str])
+        if not q_tokens or len(q_tokens[0]) == 0:
+            return {}
+        docs, score_arr = self.retriever.retrieve(q_tokens, k=len(self.products))
+        s = score_arr[0]
+        d = docs[0]
+        if len(s) == 0 or s[0] <= 0:
+            return {}
+
+        # Multi-term relevance verification
+        required_overlap = min(2, len(content_words)) if len(content_words) <= 4 else 2
+        top_candidates = d[:min(5, len(d))]
+        max_overlap = 0
+        for doc_idx in top_candidates:
+            pid = self.products[doc_idx]['id']
+            overlap = sum(w in self.words[pid] for w in content_words)
+            if overlap > max_overlap:
+                max_overlap = overlap
+        if max_overlap < required_overlap:
+            return {}
+
+        max_s = float(s[0])
+        cutoff = 0.4 * max_s
+        scores = {}
+        for doc_idx, raw_score in zip(d, s):
+            if raw_score < cutoff:
+                break
+            pid = self.products[doc_idx]['id']
+            if candidates_set is not None and pid not in candidates_set:
+                continue
+            # Semantic boost: matches in name or product_type rank highest
+            n_matches = sum(w in self.name_words[pid] for w in content_words)
+            t_matches = sum(w in self.type_words[pid] for w in content_words)
+            boost = 1.0 + (1.5 * n_matches + 1.0 * t_matches) / max(1, len(content_words))
+            scores[pid] = float(raw_score) * boost
+        return scores
+
     def search(self, arguments):
         validate_arguments(arguments)
         raw_query = arguments.get('query', '').strip()
         explicit_filters = arguments.get('filters', {})
 
+        # Check for complementary intent: 'X with (a) matching Y'
+        rec_target = None
+        m_comp = re.search(r'^(.*?)\s+\bwith\s+(?:an?\s+)?(?:matching|accompanying|complementary)\s+(.+)$', raw_query, re.IGNORECASE)
+        if m_comp:
+            primary_text = m_comp.group(1).strip()
+            rec_target = m_comp.group(2).strip()
+        else:
+            primary_text = raw_query
+
         # Extract prose constraints (budget, audience) without overriding explicit filters
-        inferred_filters, clean_query = parse_prose_constraints(raw_query) if raw_query else ({}, '')
+        inferred_filters, clean_query = parse_prose_constraints(primary_text) if primary_text else ({}, '')
         filters = dict(inferred_filters)
         filters.update(explicit_filters)  # Explicit filters take precedence!
 
@@ -296,73 +379,84 @@ class Catalog:
             expanded = [SYNONYMS.get(w, w) for w in words]
             corrected_query = ' '.join(filter(None, expanded))
 
-        q_words = tokens(corrected_query) if corrected_query else ()
         candidates = [p for p in self.products if self.matches(p, filters)]
+        candidates_set = {p['id'] for p in candidates}
         scores = {}
-        if corrected_query and self.retriever and len(self.products) > 0:
-            content_words = [w for w in q_words if w not in STOP_OR_HELPER_WORDS and not w.isdigit()]
-            vocab = self.retriever.vocab_dict
-            unknown_words = [w for w in content_words if w not in vocab]
-            if content_words and (len(unknown_words) == len(content_words) or (len(content_words) <= 3 and len(unknown_words) > 0)):
-                candidates = []
-            else:
-                q_tokens = bm25s.tokenize([corrected_query])
-                if q_tokens and len(q_tokens[0]) > 0:
-                    docs, score_arr = self.retriever.retrieve(q_tokens, k=len(self.products))
-                    s = score_arr[0]
-                    d = docs[0]
-                    if len(s) > 0 and s[0] > 0:
-                        required_overlap = min(2, len(content_words)) if len(content_words) <= 4 else 2
-                        top_candidates = d[:min(5, len(d))]
-                        max_overlap = 0
-                        for doc_idx in top_candidates:
-                            pid = self.products[doc_idx]['id']
-                            overlap = sum(w in self.words[pid] for w in content_words)
-                            if overlap > max_overlap:
-                                max_overlap = overlap
-                        if max_overlap >= required_overlap:
-                            max_s = float(s[0])
-                            cutoff = 0.4 * max_s
-                            for doc_idx, score in zip(d, s):
-                                if score < cutoff:
-                                    break
-                                scores[self.products[doc_idx]['id']] = float(score)
-                candidates = [p for p in candidates if p['id'] in scores]
+
+        # Check for mixed choices: 'X and Y' / 'X or Y'
+        m_mixed = re.split(r'\b(?:and|or)\b', corrected_query, flags=re.IGNORECASE) if corrected_query else []
+        is_mixed = len(m_mixed) >= 2 and all(len(p.strip()) >= 3 for p in m_mixed)
+
+        if is_mixed:
+            # Multi-intent balanced retrieval: retrieve each choice and round-robin merge
+            choice_scores = []
+            for choice in m_mixed:
+                c_scores = self._retrieve_query_scores(choice.strip(), candidates_set)
+                choice_scores.append(c_scores)
+            
+            # Combine scores with max
+            for cs in choice_scores:
+                for pid, sc in cs.items():
+                    scores[pid] = max(scores.get(pid, 0.0), sc)
+
+            # Sort each choice branch
+            branch_sorted = []
+            for cs in choice_scores:
+                branch = [p for p in candidates if p['id'] in cs]
+                branch.sort(key=lambda p: (-cs[p['id']], p['id']))
+                branch_sorted.append(branch)
+
+            # Balanced round-robin interleaving to guarantee coverage for all choices
+            interleaved = []
+            seen = set()
+            max_len = max(len(b) for b in branch_sorted) if branch_sorted else 0
+            for idx in range(max_len):
+                for b in branch_sorted:
+                    if idx < len(b):
+                        cand = b[idx]
+                        if cand['id'] not in seen:
+                            seen.add(cand['id'])
+                            interleaved.append(cand)
+            candidates = interleaved
+        elif corrected_query:
+            scores = self._retrieve_query_scores(corrected_query, candidates_set)
+            candidates = [p for p in candidates if p['id'] in scores]
 
         sort_by = arguments.get('sort_by', 'relevance')
         sort_order = arguments.get('sort_order', 'desc')
-        if sort_by == 'relevance':
-            if corrected_query:
+        if not is_mixed:
+            if sort_by == 'relevance':
+                if corrected_query:
+                    if sort_order == 'asc':
+                        candidates.sort(key=lambda p: (scores[p['id']], p['id']))
+                    else:
+                        candidates.sort(key=lambda p: (-scores[p['id']], p['id']))
+            elif sort_by == 'rating':
+                rated = [p for p in candidates if p['rating']['average'] is not None]
+                unrated = [p for p in candidates if p['rating']['average'] is None]
                 if sort_order == 'asc':
-                    candidates.sort(key=lambda p: (scores[p['id']], p['id']))
+                    rated.sort(key=lambda p: (p['rating']['average'], p['id']))
                 else:
-                    candidates.sort(key=lambda p: (-scores[p['id']], p['id']))
-        elif sort_by == 'rating':
-            rated = [p for p in candidates if p['rating']['average'] is not None]
-            unrated = [p for p in candidates if p['rating']['average'] is None]
-            if sort_order == 'asc':
-                rated.sort(key=lambda p: (p['rating']['average'], p['id']))
-            else:
-                rated.sort(key=lambda p: (-p['rating']['average'], p['id']))
-            unrated.sort(key=lambda p: p['id'])
-            candidates = rated + unrated
-        elif sort_by == 'price':
-            if sort_order == 'asc':
-                candidates.sort(key=lambda p: (p['price']['amount'], p['id']))
-            else:
-                candidates.sort(key=lambda p: (-p['price']['amount'], p['id']))
-        elif sort_by == 'review_count':
-            if sort_order == 'asc':
-                candidates.sort(key=lambda p: (p['rating']['count'], p['id']))
-            else:
-                candidates.sort(key=lambda p: (-p['rating']['count'], p['id']))
-        elif sort_by == 'id':
-            if sort_order == 'asc':
-                candidates.sort(key=lambda p: p['id'])
-            else:
-                candidates.sort(key=lambda p: p['id'], reverse=True)
+                    rated.sort(key=lambda p: (-p['rating']['average'], p['id']))
+                unrated.sort(key=lambda p: p['id'])
+                candidates = rated + unrated
+            elif sort_by == 'price':
+                if sort_order == 'asc':
+                    candidates.sort(key=lambda p: (p['price']['amount'], p['id']))
+                else:
+                    candidates.sort(key=lambda p: (-p['price']['amount'], p['id']))
+            elif sort_by == 'review_count':
+                if sort_order == 'asc':
+                    candidates.sort(key=lambda p: (p['rating']['count'], p['id']))
+                else:
+                    candidates.sort(key=lambda p: (-p['rating']['count'], p['id']))
+            elif sort_by == 'id':
+                if sort_order == 'asc':
+                    candidates.sort(key=lambda p: p['id'])
+                else:
+                    candidates.sort(key=lambda p: p['id'], reverse=True)
 
         offset, limit = arguments.get('offset', 0), arguments.get('limit', 10)
         results = [{'id': p['id']} for p in candidates[offset:offset + limit]]
         return {'results': results, 'recommendations':
-                self.recommend(results, arguments) if results and arguments.get('include_recommendations', False) else []}
+                self.recommend(results, arguments, target_override=rec_target) if results and arguments.get('include_recommendations', False) else []}
