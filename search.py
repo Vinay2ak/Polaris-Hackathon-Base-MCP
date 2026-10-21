@@ -93,10 +93,10 @@ OCCASION_EXPANSIONS = {
     'lazy sunday': 'loungewear hoodie sweatpants joggers pajama comfortable',
     'lazy': 'loungewear hoodie joggers sweatpants',
     'sunday': 'loungewear comfortable casual',
-    'gym': 'sports athletic activewear tights shorts training',
-    'workout': 'sports athletic activewear tights shorts training',
-    'athletic': 'sports activewear tights running shorts',
-    'running': 'running shoes sports athletic joggers shorts',
+    'gym': 'sports athletic activewear training',
+    'workout': 'sports athletic activewear training',
+    'athletic': 'sports activewear athletic running',
+    'running': 'running shoes sneakers trainers athletic sport',
     'party': 'dress evening party sequin cocktail',
     'cocktail': 'cocktail dress evening party elegant',
     'dinner': 'evening dress elegant shirt trousers blazer',
@@ -226,6 +226,68 @@ APPAREL_NOUNS = {
     'hat', 'cap', 'beanie', 'scarf', 'belt', 'tie', 'sunglasses', 'socks', 'tights',
     'swimwear', 'bikini', 'swimsuit', 'pajama', 'pyjama', 'nightwear', 'underwear', 'bra', 'briefs', 'boxers'
 }
+
+NOUN_TARGET_MAP = {
+    'shoe': {'category': {'Shoes'}, 'types': {'shoe', 'shoes', 'sneakers', 'boots', 'heels', 'sandals', 'pumps', 'flat shoe', 'flat shoes', 'slippers', 'ballerinas', 'flip flop', 'moccasins', 'bootie', 'heeled sandals', 'wedge', 'other shoe'}},
+    'shoes': {'category': {'Shoes'}, 'types': {'shoe', 'shoes', 'sneakers', 'boots', 'heels', 'sandals', 'pumps', 'flat shoe', 'flat shoes', 'slippers', 'ballerinas', 'flip flop', 'moccasins', 'bootie', 'heeled sandals', 'wedge', 'other shoe'}},
+    'sneaker': {'category': {'Shoes'}, 'types': {'sneakers'}},
+    'sneakers': {'category': {'Shoes'}, 'types': {'sneakers'}},
+    'kicks': {'category': {'Shoes'}, 'types': {'sneakers'}},
+    'boot': {'category': {'Shoes'}, 'types': {'boots', 'bootie'}},
+    'boots': {'category': {'Shoes'}, 'types': {'boots', 'bootie'}},
+    'sandal': {'category': {'Shoes'}, 'types': {'sandals', 'flip flop', 'slippers', 'heeled sandals'}},
+    'sandals': {'category': {'Shoes'}, 'types': {'sandals', 'flip flop', 'slippers', 'heeled sandals'}},
+    'heel': {'category': {'Shoes'}, 'types': {'heels', 'pumps', 'heeled sandals', 'wedge'}},
+    'heels': {'category': {'Shoes'}, 'types': {'heels', 'pumps', 'heeled sandals', 'wedge'}},
+    'pumps': {'category': {'Shoes'}, 'types': {'pumps', 'heels'}},
+    'slippers': {'category': {'Shoes'}, 'types': {'slippers'}},
+    'dress': {'category': {'Garment Full body'}, 'types': {'dress'}},
+    'dresses': {'category': {'Garment Full body'}, 'types': {'dress'}},
+    'gown': {'category': {'Garment Full body'}, 'types': {'dress'}},
+    'skirt': {'category': {'Garment Lower body'}, 'types': {'skirt'}},
+    'skirts': {'category': {'Garment Lower body'}, 'types': {'skirt'}},
+    'jeans': {'category': {'Garment Lower body'}, 'types': {'trousers', 'jeans'}},
+    'pants': {'category': {'Garment Lower body'}, 'types': {'trousers', 'pants'}},
+    'trousers': {'category': {'Garment Lower body'}, 'types': {'trousers'}},
+    'shorts': {'category': {'Garment Lower body'}, 'types': {'shorts'}},
+    'joggers': {'category': {'Garment Lower body'}, 'types': {'trousers', 'sweatpants'}},
+    'sweatpants': {'category': {'Garment Lower body'}, 'types': {'trousers', 'sweatpants'}},
+    'leggings': {'category': {'Garment Lower body'}, 'types': {'leggings', 'trousers'}},
+    'jacket': {'category': {'Garment Upper body'}, 'types': {'jacket', 'coat', 'blazer'}},
+    'jackets': {'category': {'Garment Upper body'}, 'types': {'jacket', 'coat', 'blazer'}},
+    'coat': {'category': {'Garment Upper body'}, 'types': {'coat', 'jacket'}},
+    'blazer': {'category': {'Garment Upper body'}, 'types': {'blazer', 'jacket'}},
+    'sweater': {'category': {'Garment Upper body'}, 'types': {'sweater'}},
+    'sweaters': {'category': {'Garment Upper body'}, 'types': {'sweater'}},
+    'jumper': {'category': {'Garment Upper body'}, 'types': {'sweater'}},
+    'hoodie': {'category': {'Garment Upper body'}, 'types': {'hoodie', 'sweater'}},
+    'cardigan': {'category': {'Garment Upper body'}, 'types': {'cardigan', 'sweater'}},
+    'shirt': {'category': {'Garment Upper body'}, 'types': {'shirt', 't-shirt'}},
+    'shirts': {'category': {'Garment Upper body'}, 'types': {'shirt', 't-shirt'}},
+    't-shirt': {'category': {'Garment Upper body'}, 'types': {'t-shirt', 'vest top', 'top'}},
+    'tee': {'category': {'Garment Upper body'}, 'types': {'t-shirt', 'vest top', 'top'}},
+    'tees': {'category': {'Garment Upper body'}, 'types': {'t-shirt', 'vest top', 'top'}},
+    'blouse': {'category': {'Garment Upper body'}, 'types': {'blouse'}},
+    'top': {'category': {'Garment Upper body'}, 'types': {'top', 'vest top', 't-shirt', 'blouse'}},
+    'bag': {'category': {'Bags', 'Accessories'}, 'types': {'bag', 'tote', 'clutch', 'purse', 'backpack', 'cross-body', 'bumbag', 'wallet', 'shoulder bag', 'weekend/gym bag'}},
+    'bags': {'category': {'Bags', 'Accessories'}, 'types': {'bag', 'tote', 'clutch', 'purse', 'backpack', 'cross-body', 'bumbag', 'wallet', 'shoulder bag', 'weekend/gym bag'}},
+    'backpack': {'category': {'Bags', 'Accessories'}, 'types': {'backpack'}},
+    'purse': {'category': {'Bags', 'Accessories'}, 'types': {'bag', 'clutch', 'purse'}},
+    'clutch': {'category': {'Bags', 'Accessories'}, 'types': {'clutch', 'bag'}},
+    'hat': {'category': {'Accessories'}, 'types': {'cap', 'hat/brim', 'beanie', 'bucket hat', 'straw hat', 'cap/peaked', 'felt hat', 'hat/beanie'}},
+    'cap': {'category': {'Accessories'}, 'types': {'cap', 'cap/peaked', 'hat/beanie'}},
+    'beanie': {'category': {'Accessories'}, 'types': {'beanie', 'hat/beanie'}},
+    'scarf': {'category': {'Accessories'}, 'types': {'scarf'}},
+    'belt': {'category': {'Accessories'}, 'types': {'belt', 'braces'}},
+    'tie': {'category': {'Accessories'}, 'types': {'tie'}},
+    'sunglasses': {'category': {'Accessories'}, 'types': {'sunglasses', 'eyeglasses'}},
+    'glasses': {'category': {'Accessories'}, 'types': {'sunglasses', 'eyeglasses'}},
+    'socks': {'category': {'Socks & Tights'}, 'types': {'socks'}},
+    'tights': {'category': {'Socks & Tights', 'Garment Lower body'}, 'types': {'tights'}},
+    'swimwear': {'category': {'Swimwear'}, 'types': {'swimwear', 'bikini', 'swimsuit', 'swim'}},
+    'bikini': {'category': {'Swimwear'}, 'types': {'bikini', 'swimwear'}},
+}
+
 
 
 def is_compatible_audience(primary_aud, cand_aud):
@@ -550,6 +612,22 @@ class Catalog:
                 continue
             rrf[pid] = rrf.get(pid, 0.0) + 1.0 / (60 + rank)
 
+        # Detect targeted category/type constraints from query words
+        req_cats = None
+        req_types = None
+        for w in q_words:
+            if w in NOUN_TARGET_MAP:
+                req_cats = NOUN_TARGET_MAP[w]['category']
+                req_types = NOUN_TARGET_MAP[w]['types']
+                break
+
+        # Detect audience intent
+        target_aud = None
+        if any(w in ('men', 'man', 'male', 'gentlemen', 'gentleman', 'ladko') for w in q_words):
+            target_aud = 'men'
+        elif any(w in ('women', 'woman', 'ladies', 'female', 'mahilaon') for w in q_words):
+            target_aud = 'women'
+
         scores = {}
         for pid, score in rrf.items():
             p = self.products[self.id_to_idx[pid]]
@@ -557,10 +635,35 @@ class Catalog:
             t_matches = sum(w in self.type_words[pid] for w in content_words) if content_words else 0
             boost = 1.0 + (1.5 * n_matches + 1.0 * t_matches) / max(1, len(content_words))
 
+            p_cat = p.get('category')
+            p_type = (p.get('product_type') or '').lower()
+            if req_cats:
+                if p_cat in req_cats:
+                    boost *= 2.5
+                    if req_types and any(k in p_type for k in req_types):
+                        boost *= 1.5
+                else:
+                    boost *= 0.15
+
             if q_colors:
                 p_col = (p.get('color') or '').lower()
                 if any(qc in p_col for qc in q_colors):
-                    boost *= 1.25
+                    boost *= 2.0
+                else:
+                    boost *= 0.3
+
+            if target_aud:
+                p_aud = (p.get('audience') or '').lower()
+                if target_aud == 'men':
+                    if 'men' in p_aud and 'women' not in p_aud:
+                        boost *= 1.5
+                    elif 'ladies' in p_aud or 'women' in p_aud:
+                        boost *= 0.2
+                elif target_aud == 'women':
+                    if 'ladies' in p_aud or 'women' in p_aud or 'divided' in p_aud:
+                        boost *= 1.5
+                    elif 'men' in p_aud and 'women' not in p_aud:
+                        boost *= 0.2
 
             avg_r = p['rating']['average']
             if avg_r is not None:
@@ -569,6 +672,7 @@ class Catalog:
             scores[pid] = score * boost
 
         return scores
+
 
     def recommend(self, results, arguments, target_override=None):
         if not results or not arguments.get('include_recommendations', False):
