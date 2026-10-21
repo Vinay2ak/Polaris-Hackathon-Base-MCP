@@ -143,8 +143,8 @@ def extract_primary_and_rec(query):
     if m:
         return m.group(2).strip(), m.group(1).strip()
 
-    # Inverted: '<accessory> to (go with|match) <primary>'
-    m = re.search(r'^((?:[\w\-]+\s+){0,3}(?:' + acc_pattern + r'))\s+to\s+(?:go with|match)\s+(?:an?\s+)?(.+)$', query, re.IGNORECASE)
+    # Inverted: '<accessory> (to go with|to match|to wear with|to pair with|paired with) <primary>'
+    m = re.search(r'^((?:(?:an?\s+)?(?:matching|accompanying|complementary)\s+)?(?:(?:a\s+)?pair\s+of\s+)?(?:[\w\-]+\s+){0,3}(?:' + acc_pattern + r'))\s+(?:to go with|to match|to wear with|to pair with|paired with)\s+(?:an?\s+)?(.+)$', query, re.IGNORECASE)
     if m:
         return m.group(2).strip(), m.group(1).strip()
 
@@ -277,19 +277,24 @@ NOUN_TARGET_MAP = {
     'jacket': {'category': {'Garment Upper body'}, 'types': {'jacket', 'coat', 'blazer'}},
     'jackets': {'category': {'Garment Upper body'}, 'types': {'jacket', 'coat', 'blazer'}},
     'coat': {'category': {'Garment Upper body'}, 'types': {'coat', 'jacket'}},
+    'suit': {'category': {'Garment Upper body', 'Garment Full body'}, 'types': {'blazer', 'suit', 'jacket'}},
+    'suits': {'category': {'Garment Upper body', 'Garment Full body'}, 'types': {'blazer', 'suit', 'jacket'}},
+    'tuxedo': {'category': {'Garment Upper body', 'Garment Full body'}, 'types': {'blazer', 'suit', 'jacket'}},
     'blazer': {'category': {'Garment Upper body'}, 'types': {'blazer', 'jacket'}},
     'sweater': {'category': {'Garment Upper body'}, 'types': {'sweater'}},
     'sweaters': {'category': {'Garment Upper body'}, 'types': {'sweater'}},
     'jumper': {'category': {'Garment Upper body'}, 'types': {'sweater'}},
     'hoodie': {'category': {'Garment Upper body'}, 'types': {'hoodie', 'sweater'}},
     'cardigan': {'category': {'Garment Upper body'}, 'types': {'cardigan', 'sweater'}},
-    'shirt': {'category': {'Garment Upper body'}, 'types': {'shirt', 't-shirt'}},
-    'shirts': {'category': {'Garment Upper body'}, 'types': {'shirt', 't-shirt'}},
+    'shirt': {'category': {'Garment Upper body'}, 'types': {'shirt'}},
+    'shirts': {'category': {'Garment Upper body'}, 'types': {'shirt'}},
     't-shirt': {'category': {'Garment Upper body'}, 'types': {'t-shirt', 'vest top', 'top'}},
     'tee': {'category': {'Garment Upper body'}, 'types': {'t-shirt', 'vest top', 'top'}},
     'tees': {'category': {'Garment Upper body'}, 'types': {'t-shirt', 'vest top', 'top'}},
     'blouse': {'category': {'Garment Upper body'}, 'types': {'blouse'}},
     'top': {'category': {'Garment Upper body'}, 'types': {'top', 'vest top', 't-shirt', 'blouse'}},
+    'activewear': {'category': {'Garment Upper body', 'Garment Lower body'}, 'types': {'t-shirt', 'top', 'shorts', 'tights', 'trousers', 'jacket'}},
+    'sportswear': {'category': {'Garment Upper body', 'Garment Lower body'}, 'types': {'t-shirt', 'top', 'shorts', 'tights', 'trousers', 'jacket'}},
     'bag': {'category': {'Bags', 'Accessories'}, 'types': {'bag', 'tote', 'clutch', 'purse', 'backpack', 'cross-body', 'bumbag', 'wallet', 'shoulder bag', 'weekend/gym bag'}},
     'bags': {'category': {'Bags', 'Accessories'}, 'types': {'bag', 'tote', 'clutch', 'purse', 'backpack', 'cross-body', 'bumbag', 'wallet', 'shoulder bag', 'weekend/gym bag'}},
     'backpack': {'category': {'Bags', 'Accessories'}, 'types': {'backpack'}},
@@ -302,6 +307,7 @@ NOUN_TARGET_MAP = {
     'belt': {'category': {'Accessories'}, 'types': {'belt', 'braces'}},
     'tie': {'category': {'Accessories'}, 'types': {'tie'}},
     'sunglasses': {'category': {'Accessories'}, 'types': {'sunglasses', 'eyeglasses'}},
+    'shades': {'category': {'Accessories'}, 'types': {'sunglasses', 'eyeglasses'}},
     'glasses': {'category': {'Accessories'}, 'types': {'sunglasses', 'eyeglasses'}},
     'socks': {'category': {'Socks & Tights'}, 'types': {'socks'}},
     'tights': {'category': {'Socks & Tights', 'Garment Lower body'}, 'types': {'tights'}},
@@ -321,7 +327,7 @@ def is_compatible_audience(primary_aud, cand_aud):
     if 'ladies' in p or 'women' in p:
         return 'ladies' in c or 'divided' in c or 'women' in c or 'mama' in c
     if 'men' in p and 'women' not in p:
-        return 'men' in c and 'women' not in c
+        return 'men' in c and 'women' not in c and 'ladies' not in c and 'divided' not in c
     if 'child' in p or 'baby' in p or 'kid' in p:
         return 'child' in c or 'baby' in c or 'kid' in c
     return False
@@ -673,12 +679,24 @@ class Catalog:
                 else:
                     boost *= 0.3
 
+            if 'formal' in q_words and 'shirt' in q_words:
+                if 'shirt' in p_type and 't-shirt' not in p_type:
+                    boost *= 2.0
+                elif 't-shirt' in p_type:
+                    boost *= 0.2
+
+            if any(w in ('gym', 'workout', 'athletic', 'activewear', 'sportswear') for w in q_words):
+                if p_cat in ('Garment Upper body', 'Garment Lower body', 'Shoes'):
+                    boost *= 1.5
+                elif p_cat in ('Socks & Tights', 'Accessories'):
+                    boost *= 0.15
+
             if target_aud:
                 p_aud = (p.get('audience') or '').lower()
                 if target_aud == 'men':
-                    if 'men' in p_aud and 'women' not in p_aud:
+                    if 'men' in p_aud and 'women' not in p_aud and 'divided' not in p_aud:
                         boost *= 1.5
-                    elif 'ladies' in p_aud or 'women' in p_aud:
+                    elif 'ladies' in p_aud or 'women' in p_aud or 'divided' in p_aud:
                         boost *= 0.2
                 elif target_aud == 'women':
                     if 'ladies' in p_aud or 'women' in p_aud or 'divided' in p_aud:
@@ -706,7 +724,14 @@ class Catalog:
             return []
 
         primary_p = result_products[0]
-        primary_aud = primary_p.get('audience')
+        query_text = arguments.get('query', '').lower()
+        if 'men' in query_text and 'women' not in query_text:
+            primary_aud = 'Menswear'
+        elif 'women' in query_text or 'ladies' in query_text or 'lady' in query_text:
+            primary_aud = 'Ladieswear'
+        else:
+            primary_aud = primary_p.get('audience')
+
         primary_color = primary_p.get('color') or ''
         primary_cat = primary_p.get('category')
         recommendations = []
@@ -716,6 +741,7 @@ class Catalog:
         if target_override:
             rec_filters, clean_target = parse_prose_constraints(target_override)
             clean_target = normalize_query(clean_target)
+            clean_target = re.sub(r'\b(?:an?|the|matching|accompanying|complementary|pair of|a pair of|some)\b', '', clean_target, flags=re.IGNORECASE).strip()
             t_words = set(tokens(clean_target))
 
             req_cats = None
@@ -748,10 +774,11 @@ class Catalog:
                     continue
                 rec_ids.add(pid)
                 seen_names.add(name_key)
+                target_p = result_products[len(recommendations) % min(len(result_products), 3)]
                 recommendations.append({
                     'id': pid,
-                    'for_product_id': primary_p['id'],
-                    'reason': f"Matching {p.get('product_type') or 'accessory'} to accompany {primary_p.get('product_type') or 'item'}."
+                    'for_product_id': target_p['id'],
+                    'reason': f"Matching {p.get('product_type') or 'accessory'} to accompany {target_p.get('name') or 'item'}."
                 })
                 if len(recommendations) >= 5:
                     break
@@ -775,10 +802,11 @@ class Catalog:
                             continue
                         rec_ids.add(cand['id'])
                         seen_names.add(name_key)
+                        target_p = result_products[len(recommendations) % min(len(result_products), 3)]
                         recommendations.append({
                             'id': cand['id'],
-                            'for_product_id': primary_p['id'],
-                            'reason': f"Matching {cand.get('product_type') or cat.lower()} to accompany {primary_p.get('product_type') or 'item'}."
+                            'for_product_id': target_p['id'],
+                            'reason': f"Matching {cand.get('product_type') or cat.lower()} to accompany {target_p.get('name') or 'item'}."
                         })
                         if len(recommendations) >= 5:
                             break

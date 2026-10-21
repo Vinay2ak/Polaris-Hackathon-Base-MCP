@@ -1,93 +1,93 @@
 {
   "summary": {
     "total_queries": 90,
-    "constraint_satisfaction_rate": 96.88,
+    "constraint_satisfaction_rate": 100.0,
     "determinism_rate": 100.0,
     "gibberish_empty_rate": 100.0,
     "valid_queries_empty_rate": 1.19,
     "overall_empty_rate": 7.78,
     "diversity_in_top10": {
-      "mean_unique_categories": 1.77,
-      "mean_unique_product_types": 2.3,
-      "mean_unique_sections": 4.06
+      "mean_unique_categories": 1.43,
+      "mean_unique_product_types": 1.89,
+      "mean_unique_sections": 4.01
     },
     "latency_ms": {
-      "mean": 145.72,
-      "p50": 185.11,
-      "p95": 236.15
+      "mean": 152.54,
+      "p50": 197.19,
+      "p95": 250.57
     },
     "category_breakdown": {
+      "prose_budgets": {
+        "count": 10,
+        "constraint_sat": 100.0,
+        "empty_count": 0,
+        "mean_latency_ms": 150.37827000196557
+      },
       "gibberish": {
         "count": 6,
         "constraint_sat": 100.0,
         "empty_count": 6,
-        "mean_latency_ms": 0.05248334006561587
-      },
-      "complementary_intent": {
-        "count": 6,
-        "constraint_sat": 100.0,
-        "empty_count": 0,
-        "mean_latency_ms": 212.43745000295652
-      },
-      "very_long_queries": {
-        "count": 4,
-        "constraint_sat": 100.0,
-        "empty_count": 1,
-        "mean_latency_ms": 161.30555001291214
-      },
-      "typos": {
-        "count": 8,
-        "constraint_sat": 100.0,
-        "empty_count": 0,
-        "mean_latency_ms": 192.58266250835732
-      },
-      "occasion_intent": {
-        "count": 6,
-        "constraint_sat": 100.0,
-        "empty_count": 0,
-        "mean_latency_ms": 194.99863333476242
-      },
-      "synonyms": {
-        "count": 10,
-        "constraint_sat": 77.77777777777779,
-        "empty_count": 0,
-        "mean_latency_ms": 169.68902999942657
-      },
-      "plain_keywords": {
-        "count": 12,
-        "constraint_sat": 100.0,
-        "empty_count": 0,
-        "mean_latency_ms": 195.69436666885545
-      },
-      "filter_combinations": {
-        "count": 4,
-        "constraint_sat": 100.0,
-        "empty_count": 0,
-        "mean_latency_ms": 78.68089999828953
-      },
-      "hinglish": {
-        "count": 10,
-        "constraint_sat": 93.75,
-        "empty_count": 0,
-        "mean_latency_ms": 151.1530799936736
-      },
-      "prose_budgets": {
-        "count": 10,
-        "constraint_sat": 94.11764705882352,
-        "empty_count": 0,
-        "mean_latency_ms": 147.22515000030398
+        "mean_latency_ms": 0.05643333618839582
       },
       "color_gender_constraints": {
         "count": 10,
         "constraint_sat": 100.0,
         "empty_count": 0,
-        "mean_latency_ms": 108.90139999974053
+        "mean_latency_ms": 112.8962800023146
       },
       "empty_string": {
         "count": 4,
         "constraint_sat": 100.0,
         "empty_count": 0,
-        "mean_latency_ms": 12.742724997224286
+        "mean_latency_ms": 14.144824992399663
+      },
+      "very_long_queries": {
+        "count": 4,
+        "constraint_sat": 100.0,
+        "empty_count": 1,
+        "mean_latency_ms": 172.3632999928668
+      },
+      "typos": {
+        "count": 8,
+        "constraint_sat": 100.0,
+        "empty_count": 0,
+        "mean_latency_ms": 198.53793749643955
+      },
+      "filter_combinations": {
+        "count": 4,
+        "constraint_sat": 100.0,
+        "empty_count": 0,
+        "mean_latency_ms": 81.44962499500252
+      },
+      "occasion_intent": {
+        "count": 6,
+        "constraint_sat": 100.0,
+        "empty_count": 0,
+        "mean_latency_ms": 218.7981666647829
+      },
+      "synonyms": {
+        "count": 10,
+        "constraint_sat": 100.0,
+        "empty_count": 0,
+        "mean_latency_ms": 177.1805099939229
+      },
+      "plain_keywords": {
+        "count": 12,
+        "constraint_sat": 100.0,
+        "empty_count": 0,
+        "mean_latency_ms": 203.53717499771543
+      },
+      "complementary_intent": {
+        "count": 6,
+        "constraint_sat": 100.0,
+        "empty_count": 0,
+        "mean_latency_ms": 221.37105000244142
+      },
+      "hinglish": {
+        "count": 10,
+        "constraint_sat": 100.0,
+        "empty_count": 0,
+        "mean_latency_ms": 157.9996599990409
       }
     }
   },
@@ -96,7 +96,7 @@
       "id": "plain_01",
       "category": "plain_keywords",
       "query": "cotton top",
-      "latency_ms": 190.85379998432472,
+      "latency_ms": 208.13109999289736,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -132,7 +132,7 @@
       "id": "plain_02",
       "category": "plain_keywords",
       "query": "black dress",
-      "latency_ms": 201.17019998724572,
+      "latency_ms": 205.08899999549612,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -168,7 +168,7 @@
       "id": "plain_03",
       "category": "plain_keywords",
       "query": "blue denim jeans",
-      "latency_ms": 188.85730000329204,
+      "latency_ms": 199.15790000231937,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -204,7 +204,7 @@
       "id": "plain_04",
       "category": "plain_keywords",
       "query": "white sneakers",
-      "latency_ms": 219.5971000182908,
+      "latency_ms": 205.04960001562722,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -240,7 +240,7 @@
       "id": "plain_05",
       "category": "plain_keywords",
       "query": "leather jacket",
-      "latency_ms": 192.54620000720024,
+      "latency_ms": 196.83709999662824,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -276,7 +276,7 @@
       "id": "plain_06",
       "category": "plain_keywords",
       "query": "wool sweater",
-      "latency_ms": 194.34489999548532,
+      "latency_ms": 197.5142000010237,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -312,7 +312,7 @@
       "id": "typo_01",
       "category": "typos",
       "query": "coton dres",
-      "latency_ms": 186.93950001033954,
+      "latency_ms": 198.14719998976216,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -348,7 +348,7 @@
       "id": "typo_02",
       "category": "typos",
       "query": "whie snakers",
-      "latency_ms": 207.11450002272613,
+      "latency_ms": 202.17900001443923,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -384,7 +384,7 @@
       "id": "typo_03",
       "category": "typos",
       "query": "blac t-shrt",
-      "latency_ms": 183.46900001051836,
+      "latency_ms": 198.33250000374392,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -420,7 +420,7 @@
       "id": "typo_04",
       "category": "typos",
       "query": "blu denm jens",
-      "latency_ms": 185.87960000149906,
+      "latency_ms": 197.1882999932859,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -456,7 +456,7 @@
       "id": "typo_05",
       "category": "typos",
       "query": "lether jackt",
-      "latency_ms": 199.97549999970943,
+      "latency_ms": 198.22009999188595,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -492,7 +492,7 @@
       "id": "typo_06",
       "category": "typos",
       "query": "summr skrt",
-      "latency_ms": 191.66030001360923,
+      "latency_ms": 199.58319998113438,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -501,25 +501,25 @@
       "checks_passed": 1,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 2,
-        "unique_types": 2,
-        "unique_sections": 4
+        "unique_categories": 1,
+        "unique_types": 3,
+        "unique_sections": 7
       },
       "results": [
         {
           "id": "0526637001"
         },
         {
-          "id": "0766461003"
+          "id": "0882747001"
         },
         {
-          "id": "0766461001"
+          "id": "0834417001"
         },
         {
-          "id": "0611606005"
+          "id": "0778143001"
         },
         {
-          "id": "0766461002"
+          "id": "0607503001"
         }
       ],
       "recommendations": []
@@ -528,7 +528,7 @@
       "id": "hinglish_01",
       "category": "hinglish",
       "query": "party ke liye black dress",
-      "latency_ms": 203.111800015904,
+      "latency_ms": 224.32979999575764,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -539,7 +539,7 @@
       "diversity": {
         "unique_categories": 1,
         "unique_types": 1,
-        "unique_sections": 6
+        "unique_sections": 4
       },
       "results": [
         {
@@ -552,10 +552,10 @@
           "id": "0788106003"
         },
         {
-          "id": "0828482001"
+          "id": "0694671001"
         },
         {
-          "id": "0760065001"
+          "id": "0682006003"
         }
       ],
       "recommendations": []
@@ -564,7 +564,7 @@
       "id": "hinglish_02",
       "category": "hinglish",
       "query": "ladko ke liye formal white shirt",
-      "latency_ms": 55.38999999407679,
+      "latency_ms": 59.042900014901534,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -600,7 +600,7 @@
       "id": "hinglish_03",
       "category": "hinglish",
       "query": "garmi ke kapde cotton top",
-      "latency_ms": 195.66339999437332,
+      "latency_ms": 203.66959998500533,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -609,9 +609,9 @@
       "checks_passed": 0,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 4,
-        "unique_types": 5,
-        "unique_sections": 7
+        "unique_categories": 1,
+        "unique_types": 2,
+        "unique_sections": 2
       },
       "results": [
         {
@@ -621,13 +621,13 @@
           "id": "0651076001"
         },
         {
-          "id": "0872453001"
+          "id": "0845031003"
         },
         {
-          "id": "0872453002"
+          "id": "0845031002"
         },
         {
-          "id": "0610304001"
+          "id": "0845031001"
         }
       ],
       "recommendations": []
@@ -636,34 +636,34 @@
       "id": "hinglish_04",
       "category": "hinglish",
       "query": "running ke liye shoes",
-      "latency_ms": 195.34339997335337,
+      "latency_ms": 198.20019998587668,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
       "is_empty": false,
       "checks_total": 1,
-      "checks_passed": 0,
-      "constraint_score": 0.0,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 3,
-        "unique_types": 4,
-        "unique_sections": 3
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 2
       },
       "results": [
         {
-          "id": "0851582001"
+          "id": "0569355014"
         },
         {
-          "id": "0699841001"
+          "id": "0569355006"
         },
         {
-          "id": "0242354009"
+          "id": "0659146006"
         },
         {
-          "id": "0699841005"
+          "id": "0569355007"
         },
         {
-          "id": "0734870001"
+          "id": "0569355013"
         }
       ],
       "recommendations": []
@@ -672,7 +672,7 @@
       "id": "hinglish_05",
       "category": "hinglish",
       "query": "saste black jeans under 1500",
-      "latency_ms": 151.05069999117404,
+      "latency_ms": 146.13180002197623,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -681,25 +681,25 @@
       "checks_passed": 2,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 2,
-        "unique_types": 6,
-        "unique_sections": 4
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 3
       },
       "results": [
         {
-          "id": "0778458007"
+          "id": "0612912001"
         },
         {
-          "id": "0691695011"
+          "id": "0400342003"
         },
         {
-          "id": "0803933001"
+          "id": "0875105002"
         },
         {
-          "id": "0639450001"
+          "id": "0665477013"
         },
         {
-          "id": "0916766001"
+          "id": "0805765001"
         }
       ],
       "recommendations": []
@@ -708,7 +708,7 @@
       "id": "hinglish_06",
       "category": "hinglish",
       "query": "ladies ke liye sundar skirt",
-      "latency_ms": 85.65470000030473,
+      "latency_ms": 87.91529998416081,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -717,9 +717,9 @@
       "checks_passed": 2,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 2,
-        "unique_types": 2,
-        "unique_sections": 2
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 1
       },
       "results": [
         {
@@ -732,10 +732,10 @@
           "id": "0658304004"
         },
         {
-          "id": "0526864002"
+          "id": "0658298006"
         },
         {
-          "id": "0658298006"
+          "id": "0736319001"
         }
       ],
       "recommendations": []
@@ -744,7 +744,7 @@
       "id": "synonym_01",
       "category": "synonyms",
       "query": "white kicks and black tee",
-      "latency_ms": 268.3454999933019,
+      "latency_ms": 278.8615000026766,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -780,7 +780,7 @@
       "id": "synonym_02",
       "category": "synonyms",
       "query": "trousers and warm jumper",
-      "latency_ms": 261.2569000048097,
+      "latency_ms": 264.3773999880068,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -789,22 +789,22 @@
       "checks_passed": 0,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 4,
-        "unique_types": 4,
-        "unique_sections": 6
+        "unique_categories": 2,
+        "unique_types": 3,
+        "unique_sections": 7
       },
       "results": [
         {
           "id": "0186372011"
         },
         {
-          "id": "0634767002"
+          "id": "0519718001"
         },
         {
           "id": "0482199001"
         },
         {
-          "id": "0634767004"
+          "id": "0519718007"
         },
         {
           "id": "0607176001"
@@ -816,34 +816,34 @@
       "id": "synonym_03",
       "category": "synonyms",
       "query": "dark shades for summer",
-      "latency_ms": 184.54250000650063,
+      "latency_ms": 194.41130000632256,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
       "is_empty": false,
       "checks_total": 1,
-      "checks_passed": 0,
-      "constraint_score": 0.0,
+      "checks_passed": 1,
+      "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 4,
+        "unique_categories": 1,
         "unique_types": 4,
-        "unique_sections": 5
+        "unique_sections": 3
       },
       "results": [
         {
-          "id": "0872453002"
+          "id": "0655046001"
         },
         {
-          "id": "0872453001"
+          "id": "0655046002"
         },
         {
-          "id": "0651076001"
+          "id": "0759295001"
         },
         {
-          "id": "0611606001"
+          "id": "0751859002"
         },
         {
-          "id": "0601111001"
+          "id": "0766115001"
         }
       ],
       "recommendations": []
@@ -852,7 +852,7 @@
       "id": "synonym_04",
       "category": "synonyms",
       "query": "leather purse for women",
-      "latency_ms": 85.8967000094708,
+      "latency_ms": 79.92250000825152,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -888,7 +888,7 @@
       "id": "synonym_05",
       "category": "synonyms",
       "query": "black ankle booties",
-      "latency_ms": 191.22079998487607,
+      "latency_ms": 198.84610001463443,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -924,7 +924,7 @@
       "id": "synonym_06",
       "category": "synonyms",
       "query": "winter coat for men",
-      "latency_ms": 54.759299993747845,
+      "latency_ms": 55.99239998264238,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -960,7 +960,7 @@
       "id": "budget_01",
       "category": "prose_budgets",
       "query": "cotton dress under 1500",
-      "latency_ms": 141.04359998600557,
+      "latency_ms": 146.15080002113245,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -996,34 +996,34 @@
       "id": "budget_02",
       "category": "prose_budgets",
       "query": "running shoes below INR 2000",
-      "latency_ms": 158.00320002017543,
+      "latency_ms": 155.6070000224281,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
       "is_empty": false,
       "checks_total": 2,
-      "checks_passed": 1,
-      "constraint_score": 0.5,
+      "checks_passed": 2,
+      "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 3,
-        "unique_types": 5,
+        "unique_categories": 1,
+        "unique_types": 1,
         "unique_sections": 3
       },
       "results": [
         {
-          "id": "0851582001"
+          "id": "0622966001"
         },
         {
-          "id": "0699841001"
+          "id": "0569355003"
         },
         {
-          "id": "0242354009"
+          "id": "0622966008"
         },
         {
-          "id": "0699841005"
+          "id": "0494088002"
         },
         {
-          "id": "0734870001"
+          "id": "0728791001"
         }
       ],
       "recommendations": []
@@ -1032,7 +1032,7 @@
       "id": "budget_03",
       "category": "prose_budgets",
       "query": "jacket under 3000",
-      "latency_ms": 171.65979999117553,
+      "latency_ms": 186.99709998327307,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1068,7 +1068,7 @@
       "id": "budget_04",
       "category": "prose_budgets",
       "query": "jeans between 1000 and 2000",
-      "latency_ms": 145.48879998619668,
+      "latency_ms": 147.9170999955386,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1077,8 +1077,8 @@
       "checks_passed": 1,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 2,
-        "unique_types": 2,
+        "unique_categories": 1,
+        "unique_types": 1,
         "unique_sections": 5
       },
       "results": [
@@ -1104,7 +1104,7 @@
       "id": "budget_05",
       "category": "prose_budgets",
       "query": "t-shirt less than 800",
-      "latency_ms": 122.50910000875592,
+      "latency_ms": 126.09999999403954,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1140,7 +1140,7 @@
       "id": "budget_06",
       "category": "prose_budgets",
       "query": "black trousers max 1200",
-      "latency_ms": 140.6245999969542,
+      "latency_ms": 138.47740000346676,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1176,7 +1176,7 @@
       "id": "constraint_01",
       "category": "color_gender_constraints",
       "query": "red dress for women",
-      "latency_ms": 95.1342000043951,
+      "latency_ms": 96.95279999868944,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1212,7 +1212,7 @@
       "id": "constraint_02",
       "category": "color_gender_constraints",
       "query": "blue formal shirt for men",
-      "latency_ms": 58.79909999202937,
+      "latency_ms": 61.92050001118332,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1248,7 +1248,7 @@
       "id": "constraint_03",
       "category": "color_gender_constraints",
       "query": "pink top for baby",
-      "latency_ms": 199.38820000970736,
+      "latency_ms": 202.12939998600632,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1284,7 +1284,7 @@
       "id": "constraint_04",
       "category": "color_gender_constraints",
       "query": "yellow summer dress for girls",
-      "latency_ms": 191.3877000042703,
+      "latency_ms": 202.9335999977775,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1299,19 +1299,19 @@
       },
       "results": [
         {
-          "id": "0872453002"
-        },
-        {
-          "id": "0872453001"
-        },
-        {
           "id": "0496762008"
         },
         {
-          "id": "0611606005"
+          "id": "0648713001"
         },
         {
-          "id": "0766461002"
+          "id": "0890601005"
+        },
+        {
+          "id": "0860231003"
+        },
+        {
+          "id": "0724922015"
         }
       ],
       "recommendations": []
@@ -1320,7 +1320,7 @@
       "id": "constraint_05",
       "category": "color_gender_constraints",
       "query": "black suit for gentlemen",
-      "latency_ms": 60.27469999389723,
+      "latency_ms": 62.83820001408458,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1331,7 +1331,7 @@
       "diversity": {
         "unique_categories": 3,
         "unique_types": 4,
-        "unique_sections": 4
+        "unique_sections": 3
       },
       "results": [
         {
@@ -1344,10 +1344,10 @@
           "id": "0663475001"
         },
         {
-          "id": "0623085001"
+          "id": "0839915001"
         },
         {
-          "id": "0839915001"
+          "id": "0768332001"
         }
       ],
       "recommendations": []
@@ -1356,7 +1356,7 @@
       "id": "constraint_06",
       "category": "color_gender_constraints",
       "query": "white hoodie for ladies",
-      "latency_ms": 85.70700002019294,
+      "latency_ms": 86.88290001009591,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1366,8 +1366,8 @@
       "constraint_score": 1.0,
       "diversity": {
         "unique_categories": 1,
-        "unique_types": 1,
-        "unique_sections": 3
+        "unique_types": 2,
+        "unique_sections": 2
       },
       "results": [
         {
@@ -1380,10 +1380,10 @@
           "id": "0869872006"
         },
         {
-          "id": "0921918001"
+          "id": "0456163031"
         },
         {
-          "id": "0904545002"
+          "id": "0456163070"
         }
       ],
       "recommendations": []
@@ -1392,7 +1392,7 @@
       "id": "occasion_01",
       "category": "occasion_intent",
       "query": "outfit for a beach wedding",
-      "latency_ms": 187.45080000371672,
+      "latency_ms": 205.98030000110157,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1428,7 +1428,7 @@
       "id": "occasion_02",
       "category": "occasion_intent",
       "query": "something comfortable for a lazy Sunday",
-      "latency_ms": 198.01799999549985,
+      "latency_ms": 238.94069998641498,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1464,7 +1464,7 @@
       "id": "occasion_03",
       "category": "occasion_intent",
       "query": "elegant dress for dinner party",
-      "latency_ms": 194.07480000518262,
+      "latency_ms": 225.95759999239817,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1500,7 +1500,7 @@
       "id": "occasion_04",
       "category": "occasion_intent",
       "query": "athletic wear for running in the gym",
-      "latency_ms": 194.89480002084747,
+      "latency_ms": 223.01380001590587,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1509,25 +1509,25 @@
       "checks_passed": 1,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 2,
-        "unique_types": 3,
-        "unique_sections": 3
+        "unique_categories": 4,
+        "unique_types": 4,
+        "unique_sections": 5
       },
       "results": [
         {
-          "id": "0699841001"
+          "id": "0755159003"
         },
         {
-          "id": "0699841005"
+          "id": "0755159002"
         },
         {
-          "id": "0769681001"
+          "id": "0806806001"
         },
         {
-          "id": "0617284003"
+          "id": "0806803001"
         },
         {
-          "id": "0624350001"
+          "id": "0813283002"
         }
       ],
       "recommendations": []
@@ -1536,7 +1536,7 @@
       "id": "occasion_05",
       "category": "occasion_intent",
       "query": "formal business interview attire",
-      "latency_ms": 195.03059997805394,
+      "latency_ms": 208.2959999970626,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1572,7 +1572,7 @@
       "id": "occasion_06",
       "category": "occasion_intent",
       "query": "warm cozy outfit for cold winter snow",
-      "latency_ms": 200.5228000052739,
+      "latency_ms": 210.60059999581426,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -1608,7 +1608,7 @@
       "id": "complement_01",
       "category": "complementary_intent",
       "query": "A dress for dinner under INR 2000 with a matching bag under INR 1000",
-      "latency_ms": 195.80840002163313,
+      "latency_ms": 213.86240000720136,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 5,
@@ -1660,7 +1660,7 @@
           "reason": "Matching Bag to accompany Dress."
         },
         {
-          "id": "0635190003",
+          "id": "0712954001",
           "for_product_id": "0699211005",
           "reason": "Matching Bag to accompany Dress."
         }
@@ -1670,7 +1670,7 @@
       "id": "complement_02",
       "category": "complementary_intent",
       "query": "black cocktail dress with high heels",
-      "latency_ms": 236.1486000008881,
+      "latency_ms": 250.57130001368932,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 5,
@@ -1679,9 +1679,9 @@
       "checks_passed": 2,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 2,
-        "unique_types": 2,
-        "unique_sections": 6
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 5
       },
       "results": [
         {
@@ -1732,7 +1732,7 @@
       "id": "complement_03",
       "category": "complementary_intent",
       "query": "formal suit for men with matching tie",
-      "latency_ms": 95.20019998308271,
+      "latency_ms": 100.26010000729002,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 5,
@@ -1769,22 +1769,22 @@
           "reason": "Matching Tie to accompany Trousers."
         },
         {
-          "id": "0846337002",
-          "for_product_id": "0623085001",
-          "reason": "Matching Tie to accompany Trousers."
-        },
-        {
-          "id": "0846337005",
-          "for_product_id": "0623085001",
-          "reason": "Matching Tie to accompany Trousers."
-        },
-        {
-          "id": "0846337003",
-          "for_product_id": "0623085001",
-          "reason": "Matching Tie to accompany Trousers."
-        },
-        {
           "id": "0690176001",
+          "for_product_id": "0623085001",
+          "reason": "Matching Tie to accompany Trousers."
+        },
+        {
+          "id": "0605842009",
+          "for_product_id": "0623085001",
+          "reason": "Matching Tie to accompany Trousers."
+        },
+        {
+          "id": "0606413002",
+          "for_product_id": "0623085001",
+          "reason": "Matching Tie to accompany Trousers."
+        },
+        {
+          "id": "0702329001",
           "for_product_id": "0623085001",
           "reason": "Matching Tie to accompany Trousers."
         }
@@ -1794,7 +1794,7 @@
       "id": "complement_04",
       "category": "complementary_intent",
       "query": "beach swimwear with sunglasses",
-      "latency_ms": 222.32070000609383,
+      "latency_ms": 228.59749998315237,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 5,
@@ -1831,22 +1831,22 @@
           "reason": "Matching Sunglasses to accompany Swimwear set."
         },
         {
-          "id": "0722900003",
-          "for_product_id": "0563423001",
-          "reason": "Matching Sunglasses to accompany Swimwear set."
-        },
-        {
           "id": "0818185002",
           "for_product_id": "0563423001",
           "reason": "Matching Sunglasses to accompany Swimwear set."
         },
         {
-          "id": "0818185003",
+          "id": "0712307001",
           "for_product_id": "0563423001",
           "reason": "Matching Sunglasses to accompany Swimwear set."
         },
         {
-          "id": "0824130003",
+          "id": "0826250001",
+          "for_product_id": "0563423001",
+          "reason": "Matching Sunglasses to accompany Swimwear set."
+        },
+        {
+          "id": "0837945001",
           "for_product_id": "0563423001",
           "reason": "Matching Sunglasses to accompany Swimwear set."
         }
@@ -1856,7 +1856,7 @@
       "id": "complement_05",
       "category": "complementary_intent",
       "query": "casual denim jacket with a scarf",
-      "latency_ms": 228.8131999957841,
+      "latency_ms": 236.95570000563748,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 5,
@@ -1893,22 +1893,22 @@
           "reason": "Matching Scarf to accompany Jacket."
         },
         {
-          "id": "0742745008",
-          "for_product_id": "0573418002",
-          "reason": "Matching Scarf to accompany Jacket."
-        },
-        {
           "id": "0760880001",
           "for_product_id": "0573418002",
           "reason": "Matching Scarf to accompany Jacket."
         },
         {
-          "id": "0742745002",
+          "id": "0760878001",
           "for_product_id": "0573418002",
           "reason": "Matching Scarf to accompany Jacket."
         },
         {
-          "id": "0760878001",
+          "id": "0815461002",
+          "for_product_id": "0573418002",
+          "reason": "Matching Scarf to accompany Jacket."
+        },
+        {
+          "id": "0814319001",
           "for_product_id": "0573418002",
           "reason": "Matching Scarf to accompany Jacket."
         }
@@ -1918,7 +1918,7 @@
       "id": "complement_06",
       "category": "complementary_intent",
       "query": "cotton skirt",
-      "latency_ms": 296.3336000102572,
+      "latency_ms": 297.979299997678,
       "is_deterministic": true,
       "result_count": 5,
       "recommendation_count": 5,
@@ -1980,7 +1980,7 @@
       "id": "empty_01",
       "category": "empty_string",
       "query": "",
-      "latency_ms": 0.17549999756738544,
+      "latency_ms": 0.15459998394362628,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2016,7 +2016,7 @@
       "id": "empty_02",
       "category": "empty_string",
       "query": "   ",
-      "latency_ms": 0.08009999874047935,
+      "latency_ms": 0.04019998596049845,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2052,7 +2052,7 @@
       "id": "empty_03",
       "category": "empty_string",
       "query": "\t\n  ",
-      "latency_ms": 0.06809999467805028,
+      "latency_ms": 0.035500008380040526,
       "is_deterministic": true,
       "result_count": 5,
       "recommendation_count": 0,
@@ -2088,7 +2088,7 @@
       "id": "empty_04",
       "category": "empty_string",
       "query": "",
-      "latency_ms": 50.64719999791123,
+      "latency_ms": 56.348999991314486,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2124,7 +2124,7 @@
       "id": "gibberish_01",
       "category": "gibberish",
       "query": "spaceship engine",
-      "latency_ms": 0.14710001414641738,
+      "latency_ms": 0.1534000039100647,
       "is_deterministic": true,
       "result_count": 0,
       "recommendation_count": 0,
@@ -2144,7 +2144,7 @@
       "id": "gibberish_02",
       "category": "gibberish",
       "query": "quantum laptop computer",
-      "latency_ms": 0.041099992813542485,
+      "latency_ms": 0.04839999019168317,
       "is_deterministic": true,
       "result_count": 0,
       "recommendation_count": 0,
@@ -2164,7 +2164,7 @@
       "id": "gibberish_03",
       "category": "gibberish",
       "query": "pet elephant food",
-      "latency_ms": 0.031200004741549492,
+      "latency_ms": 0.03659998765215278,
       "is_deterministic": true,
       "result_count": 0,
       "recommendation_count": 0,
@@ -2184,7 +2184,7 @@
       "id": "gibberish_04",
       "category": "gibberish",
       "query": "diesel submarine propeller",
-      "latency_ms": 0.03409999771974981,
+      "latency_ms": 0.03640001523308456,
       "is_deterministic": true,
       "result_count": 0,
       "recommendation_count": 0,
@@ -2204,7 +2204,7 @@
       "id": "gibberish_05",
       "category": "gibberish",
       "query": "xkzqwpl mnvytr jhgfds",
-      "latency_ms": 0.030000024707987905,
+      "latency_ms": 0.03250001464039087,
       "is_deterministic": true,
       "result_count": 0,
       "recommendation_count": 0,
@@ -2224,7 +2224,7 @@
       "id": "gibberish_06",
       "category": "gibberish",
       "query": "nuclear hydraulic bulldozer cement",
-      "latency_ms": 0.031400006264448166,
+      "latency_ms": 0.03130000550299883,
       "is_deterministic": true,
       "result_count": 0,
       "recommendation_count": 0,
@@ -2244,7 +2244,7 @@
       "id": "long_01",
       "category": "very_long_queries",
       "query": "I am looking for a very elegant and high quality premium black evening dinner dress made of cotton or velvet that fits well for a formal gala event and is comfortable to wear all night under INR 3000",
-      "latency_ms": 356.68910000822507,
+      "latency_ms": 381.8310999777168,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2280,7 +2280,7 @@
       "id": "long_02",
       "category": "very_long_queries",
       "query": "Looking for stylish comfortable everyday walking shoes or sneakers in white or black color with good cushioning for daily office commute and casual outings",
-      "latency_ms": 6.906900001922622,
+      "latency_ms": 5.1420000090729445,
       "is_deterministic": true,
       "result_count": 0,
       "recommendation_count": 0,
@@ -2300,7 +2300,7 @@
       "id": "long_03",
       "category": "very_long_queries",
       "query": "Need a relaxed fit warm fleece hoodie and matching comfortable sweatpants for lounging at home on a cold rainy weekend with soft fabric",
-      "latency_ms": 185.10660002357326,
+      "latency_ms": 203.53790000081062,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2336,7 +2336,7 @@
       "id": "long_04",
       "category": "very_long_queries",
       "query": "Searching for a formal crisp cotton white button-up shirt suitable for men to wear with a suit during corporate client meetings and summer business presentations",
-      "latency_ms": 96.51960001792759,
+      "latency_ms": 98.94219998386689,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2372,7 +2372,7 @@
       "id": "filter_01",
       "category": "filter_combinations",
       "query": "cotton",
-      "latency_ms": 68.34820000221953,
+      "latency_ms": 69.1330999834463,
       "is_deterministic": true,
       "result_count": 5,
       "recommendation_count": 0,
@@ -2408,7 +2408,7 @@
       "id": "filter_02",
       "category": "filter_combinations",
       "query": "",
-      "latency_ms": 116.65290000382811,
+      "latency_ms": 128.0982999887783,
       "is_deterministic": true,
       "result_count": 5,
       "recommendation_count": 0,
@@ -2444,7 +2444,7 @@
       "id": "plain_07",
       "category": "plain_keywords",
       "query": "red silk dress",
-      "latency_ms": 195.4021000128705,
+      "latency_ms": 213.44110000063665,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2453,9 +2453,9 @@
       "checks_passed": 2,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 2,
-        "unique_types": 2,
-        "unique_sections": 3
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 7
       },
       "results": [
         {
@@ -2465,13 +2465,13 @@
           "id": "0615161001"
         },
         {
-          "id": "0863771002"
+          "id": "0777854001"
         },
         {
-          "id": "0863767001"
+          "id": "0737618004"
         },
         {
-          "id": "0863771001"
+          "id": "0676979001"
         }
       ],
       "recommendations": []
@@ -2480,7 +2480,7 @@
       "id": "plain_08",
       "category": "plain_keywords",
       "query": "linen trousers",
-      "latency_ms": 194.35110001359135,
+      "latency_ms": 197.31899999896996,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2516,7 +2516,7 @@
       "id": "plain_09",
       "category": "plain_keywords",
       "query": "striped polo shirt",
-      "latency_ms": 183.4079000109341,
+      "latency_ms": 195.4727999982424,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2552,7 +2552,7 @@
       "id": "plain_10",
       "category": "plain_keywords",
       "query": "winter wool scarf",
-      "latency_ms": 218.0532999918796,
+      "latency_ms": 222.26129999035038,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2588,7 +2588,7 @@
       "id": "plain_11",
       "category": "plain_keywords",
       "query": "running sports shorts",
-      "latency_ms": 185.21540000801906,
+      "latency_ms": 199.64999999501742,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2599,23 +2599,23 @@
       "diversity": {
         "unique_categories": 1,
         "unique_types": 1,
-        "unique_sections": 3
+        "unique_sections": 2
       },
       "results": [
         {
-          "id": "0617284001"
+          "id": "0617284003"
         },
         {
-          "id": "0617284003"
+          "id": "0617284001"
         },
         {
           "id": "0617284002"
         },
         {
-          "id": "0699841001"
+          "id": "0742794001"
         },
         {
-          "id": "0742794001"
+          "id": "0851582001"
         }
       ],
       "recommendations": []
@@ -2624,7 +2624,7 @@
       "id": "plain_12",
       "category": "plain_keywords",
       "query": "denim jacket blue",
-      "latency_ms": 184.53309999313205,
+      "latency_ms": 202.52299998537637,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2660,7 +2660,7 @@
       "id": "typo_07",
       "category": "typos",
       "query": "coton pyjamas",
-      "latency_ms": 192.3540999996476,
+      "latency_ms": 194.58989999839105,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2696,7 +2696,7 @@
       "id": "typo_08",
       "category": "typos",
       "query": "blak jogers",
-      "latency_ms": 193.2688000088092,
+      "latency_ms": 200.06329999887384,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2732,7 +2732,7 @@
       "id": "hinglish_07",
       "category": "hinglish",
       "query": "sundar red dress party ke liye",
-      "latency_ms": 206.7240999895148,
+      "latency_ms": 206.6853000142146,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2753,13 +2753,13 @@
           "id": "0796673002"
         },
         {
-          "id": "0828482001"
+          "id": "0812888002"
         },
         {
-          "id": "0828482002"
+          "id": "0796644002"
         },
         {
-          "id": "0760065001"
+          "id": "0648650001"
         }
       ],
       "recommendations": []
@@ -2768,7 +2768,7 @@
       "id": "hinglish_08",
       "category": "hinglish",
       "query": "garmi ke cotton shorts",
-      "latency_ms": 185.95849999110214,
+      "latency_ms": 202.4070000043139,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2777,9 +2777,9 @@
       "checks_passed": 1,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 4,
-        "unique_types": 5,
-        "unique_sections": 7
+        "unique_categories": 1,
+        "unique_types": 1,
+        "unique_sections": 5
       },
       "results": [
         {
@@ -2792,10 +2792,10 @@
           "id": "0722342004"
         },
         {
-          "id": "0872453002"
+          "id": "0722674001"
         },
         {
-          "id": "0872453001"
+          "id": "0722674003"
         }
       ],
       "recommendations": []
@@ -2804,7 +2804,7 @@
       "id": "hinglish_09",
       "category": "hinglish",
       "query": "office ke liye formal white shirt",
-      "latency_ms": 188.1277999782469,
+      "latency_ms": 206.66769999661483,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2840,7 +2840,7 @@
       "id": "hinglish_10",
       "category": "hinglish",
       "query": "ladko ke liye blue jeans under 2000",
-      "latency_ms": 44.50640000868589,
+      "latency_ms": 44.94699998758733,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2876,7 +2876,7 @@
       "id": "synonym_07",
       "category": "synonyms",
       "query": "warm jumper for winter",
-      "latency_ms": 199.6211000077892,
+      "latency_ms": 213.32869998877868,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2885,25 +2885,25 @@
       "checks_passed": 1,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 3,
-        "unique_types": 4,
-        "unique_sections": 4
+        "unique_categories": 1,
+        "unique_types": 3,
+        "unique_sections": 5
       },
       "results": [
         {
-          "id": "0634767002"
-        },
-        {
-          "id": "0634767004"
-        },
-        {
           "id": "0896279001"
+        },
+        {
+          "id": "0863333001"
         },
         {
           "id": "0519718001"
         },
         {
           "id": "0519718007"
+        },
+        {
+          "id": "0834766001"
         }
       ],
       "recommendations": []
@@ -2912,7 +2912,7 @@
       "id": "synonym_08",
       "category": "synonyms",
       "query": "stylish dark shades",
-      "latency_ms": 186.69110001064837,
+      "latency_ms": 203.82619998417795,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -2948,34 +2948,34 @@
       "id": "synonym_09",
       "category": "synonyms",
       "query": "white kicks for running",
-      "latency_ms": 190.97969998256303,
+      "latency_ms": 206.815599987749,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
       "is_empty": false,
       "checks_total": 2,
-      "checks_passed": 1,
-      "constraint_score": 0.5,
+      "checks_passed": 2,
+      "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 2,
-        "unique_types": 3,
+        "unique_categories": 1,
+        "unique_types": 1,
         "unique_sections": 3
       },
       "results": [
         {
-          "id": "0858912001"
+          "id": "0885079001"
         },
         {
-          "id": "0720100003"
+          "id": "0804507001"
         },
         {
-          "id": "0811500008"
+          "id": "0796528003"
         },
         {
-          "id": "0635839003"
+          "id": "0715664003"
         },
         {
-          "id": "0826120001"
+          "id": "0715664001"
         }
       ],
       "recommendations": []
@@ -2984,7 +2984,7 @@
       "id": "synonym_10",
       "category": "synonyms",
       "query": "leather purse for ladies",
-      "latency_ms": 73.57670000055805,
+      "latency_ms": 75.42339997598901,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -3020,7 +3020,7 @@
       "id": "budget_07",
       "category": "prose_budgets",
       "query": "summer dress under 1000",
-      "latency_ms": 139.16089999838732,
+      "latency_ms": 134.07119998009875,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -3029,25 +3029,25 @@
       "checks_passed": 2,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 4,
-        "unique_types": 8,
-        "unique_sections": 9
+        "unique_categories": 1,
+        "unique_types": 2,
+        "unique_sections": 8
       },
       "results": [
         {
           "id": "0797623003"
         },
         {
-          "id": "0845031001"
-        },
-        {
-          "id": "0721354001"
-        },
-        {
-          "id": "0723890001"
-        },
-        {
           "id": "0781501001"
+        },
+        {
+          "id": "0864282001"
+        },
+        {
+          "id": "0698597003"
+        },
+        {
+          "id": "0879298005"
         }
       ],
       "recommendations": []
@@ -3056,7 +3056,7 @@
       "id": "budget_08",
       "category": "prose_budgets",
       "query": "sneakers below 2500",
-      "latency_ms": 165.02300000865944,
+      "latency_ms": 167.76219999883324,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -3092,7 +3092,7 @@
       "id": "budget_09",
       "category": "prose_budgets",
       "query": "formal trousers between 800 and 1500",
-      "latency_ms": 134.76829999126494,
+      "latency_ms": 139.61750001180917,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -3101,25 +3101,25 @@
       "checks_passed": 1,
       "constraint_score": 1.0,
       "diversity": {
-        "unique_categories": 4,
-        "unique_types": 6,
-        "unique_sections": 4
+        "unique_categories": 1,
+        "unique_types": 2,
+        "unique_sections": 7
       },
       "results": [
         {
-          "id": "0739928001"
+          "id": "0186372042"
         },
         {
-          "id": "0633847002"
+          "id": "0738710001"
         },
         {
-          "id": "0700153004"
+          "id": "0600754001"
         },
         {
-          "id": "0607347011"
+          "id": "0753076002"
         },
         {
-          "id": "0739822022"
+          "id": "0820508002"
         }
       ],
       "recommendations": []
@@ -3128,7 +3128,7 @@
       "id": "budget_10",
       "category": "prose_budgets",
       "query": "hoodie less than 2000",
-      "latency_ms": 153.9702000154648,
+      "latency_ms": 161.08240000903606,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -3164,7 +3164,7 @@
       "id": "constraint_07",
       "category": "color_gender_constraints",
       "query": "black formal blazer for men",
-      "latency_ms": 62.269499991089106,
+      "latency_ms": 63.562900002580136,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -3200,7 +3200,7 @@
       "id": "constraint_08",
       "category": "color_gender_constraints",
       "query": "pink floral dress for women",
-      "latency_ms": 86.04560000821948,
+      "latency_ms": 92.05909998854622,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -3211,7 +3211,7 @@
       "diversity": {
         "unique_categories": 1,
         "unique_types": 1,
-        "unique_sections": 4
+        "unique_sections": 5
       },
       "results": [
         {
@@ -3224,10 +3224,10 @@
           "id": "0767799017"
         },
         {
-          "id": "0712375001"
+          "id": "0545853005"
         },
         {
-          "id": "0545853005"
+          "id": "0525926003"
         }
       ],
       "recommendations": []
@@ -3236,7 +3236,7 @@
       "id": "constraint_09",
       "category": "color_gender_constraints",
       "query": "blue cotton romper for baby",
-      "latency_ms": 193.5953999927733,
+      "latency_ms": 203.97120001143776,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -3272,7 +3272,7 @@
       "id": "constraint_10",
       "category": "color_gender_constraints",
       "query": "white casual shirt for gentlemen",
-      "latency_ms": 56.412599980831146,
+      "latency_ms": 55.712200002744794,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -3308,7 +3308,7 @@
       "id": "filter_03",
       "category": "filter_combinations",
       "query": "linen shirt",
-      "latency_ms": 40.36899999482557,
+      "latency_ms": 42.75029999553226,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
@@ -3344,7 +3344,7 @@
       "id": "filter_04",
       "category": "filter_combinations",
       "query": "leather shoes",
-      "latency_ms": 89.35349999228492,
+      "latency_ms": 85.81680001225322,
       "is_deterministic": true,
       "result_count": 10,
       "recommendation_count": 0,
