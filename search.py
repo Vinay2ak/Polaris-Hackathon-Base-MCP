@@ -128,19 +128,40 @@ ACCESSORY_WORDS = [
     'sunglasses', 'shades', 'eyeglasses', 'glasses',
     'hat', 'hats', 'cap', 'caps', 'beanie', 'beanies', 'beret',
     'jewelry', 'jewellery', 'necklace', 'necklaces', 'earring', 'earrings', 'bracelet', 'bracelets', 'ring', 'rings', 'watch', 'watches',
+    'accessories', 'accessory',
     'jacket', 'jackets', 'blazer', 'blazers', 'cardigan', 'coat',
     'socks', 'tights',
 ]
 
 acc_pattern = '|'.join(re.escape(w) for w in sorted(ACCESSORY_WORDS, key=len, reverse=True))
 
-REC_EXTRACTOR = re.compile(
-    r'^(.*?)\s+(?:'
-    r'\b(?:with|and)\s+(?:an?\s+)?(?:(?:matching|accompanying|complementary)\s+)(.+)|'
-    r'\bwith\s+(?:an?\s+)?(?:(?:pair of|a pair of|some)\s+)?((?:[\w\-]+\s+){0,3}(?:' + acc_pattern + r')\b.*)'
-    r')$',
-    re.IGNORECASE
-)
+def extract_primary_and_rec(query):
+    if not query:
+        return '', None
+    # Inverted: 'matching <accessory> for/to go with/to match <primary>'
+    m = re.search(r'^(?:an?\s+)?(?:matching|accompanying|complementary)\s+(.+?)\s+(?:for|to go with|to match|with)\s+(.+)$', query, re.IGNORECASE)
+    if m:
+        return m.group(2).strip(), m.group(1).strip()
+
+    # Inverted: '<accessory> to (go with|match) <primary>'
+    m = re.search(r'^((?:[\w\-]+\s+){0,3}(?:' + acc_pattern + r'))\s+to\s+(?:go with|match)\s+(?:an?\s+)?(.+)$', query, re.IGNORECASE)
+    if m:
+        return m.group(2).strip(), m.group(1).strip()
+
+    # Standard: '<primary> with/and/paired with/styled with/along with matching <accessory>'
+    m = re.search(
+        r'^(.*?)\s+(?:'
+        r'\b(?:with|and|paired with|styled with|along with|together with|plus)\s+(?:an?\s+)?(?:(?:matching|accompanying|complementary)\s+)(.+)|'
+        r'\b(?:with|paired with|styled with|along with|together with)\s+(?:an?\s+)?(?:(?:pair of|a pair of|some)\s+)?((?:[\w\-]+\s+){0,3}(?:' + acc_pattern + r')\b.*)'
+        r')$',
+        query,
+        re.IGNORECASE
+    )
+    if m:
+        return m.group(1).strip(), (m.group(2) or m.group(3)).strip()
+
+    return query, None
+
 
 TARGET_TYPE_RULES = [
     (
@@ -684,12 +705,13 @@ class Catalog:
         if not result_products:
             return []
 
-        result_categories = {p.get('category') for p in result_products if p.get('category')}
         primary_p = result_products[0]
         primary_aud = primary_p.get('audience')
         primary_color = primary_p.get('color') or ''
+        primary_cat = primary_p.get('category')
         recommendations = []
         rec_ids = set()
+        seen_names = set()
 
         if target_override:
             rec_filters, clean_target = parse_prose_constraints(target_override)
@@ -711,6 +733,9 @@ class Catalog:
                 p = self.products[self.id_to_idx[pid]]
                 if pid in result_pid_set or pid in rec_ids:
                     continue
+                name_key = p['name'].strip().lower()
+                if name_key in seen_names:
+                    continue
                 if req_cats is not None and p.get('category') not in req_cats:
                     continue
                 if req_types is not None:
@@ -722,6 +747,7 @@ class Catalog:
                 if not self.matches(p, rec_filters):
                     continue
                 rec_ids.add(pid)
+                seen_names.add(name_key)
                 recommendations.append({
                     'id': pid,
                     'for_product_id': primary_p['id'],
@@ -736,6 +762,9 @@ class Catalog:
                     for cand in self.products_by_category.get(cat, []):
                         if cand['id'] in result_pid_set or cand['id'] in rec_ids:
                             continue
+                        name_key = cand['name'].strip().lower()
+                        if name_key in seen_names:
+                            continue
                         if req_types is not None:
                             pt = (cand.get('product_type') or '').lower()
                             if not any(k in pt for k in req_types):
@@ -745,6 +774,7 @@ class Catalog:
                         if not self.matches(cand, rec_filters):
                             continue
                         rec_ids.add(cand['id'])
+                        seen_names.add(name_key)
                         recommendations.append({
                             'id': cand['id'],
                             'for_product_id': primary_p['id'],
@@ -765,12 +795,12 @@ class Catalog:
             aud = res_p.get('audience')
             color = res_p.get('color') or ''
             for target_cat in complementary_targets:
-                if target_cat in result_categories:
+                if target_cat == res_cat:
                     continue
                 candidates = self.products_by_category.get(target_cat, [])
-                matching_aud = [c for c in candidates if is_compatible_audience(aud, c.get('audience')) and c['id'] not in result_pid_set and c['id'] not in rec_ids]
+                matching_aud = [c for c in candidates if is_compatible_audience(aud, c.get('audience')) and c['id'] not in result_pid_set and c['id'] not in rec_ids and c['name'].strip().lower() not in seen_names]
                 if not matching_aud:
-                    matching_aud = [c for c in candidates if c['id'] not in result_pid_set and c['id'] not in rec_ids]
+                    matching_aud = [c for c in candidates if c['id'] not in result_pid_set and c['id'] not in rec_ids and c['name'].strip().lower() not in seen_names]
 
                 if matching_aud:
                     def rec_priority(c):
@@ -781,6 +811,7 @@ class Catalog:
 
                     best = max(matching_aud, key=rec_priority)
                     rec_ids.add(best['id'])
+                    seen_names.add(best['name'].strip().lower())
                     recommendations.append({
                         'id': best['id'],
                         'for_product_id': res_p['id'],
@@ -803,13 +834,9 @@ class Catalog:
 
         rec_target = None
         include_recs = arguments.get('include_recommendations', False)
-        m_rec = REC_EXTRACTOR.search(raw_query) if raw_query else None
-        if m_rec:
-            primary_text = m_rec.group(1).strip()
-            if include_recs:
-                rec_target = (m_rec.group(2) or m_rec.group(3)).strip()
-        else:
-            primary_text = raw_query
+        primary_text, extracted_rec = extract_primary_and_rec(raw_query) if raw_query else ('', None)
+        if include_recs:
+            rec_target = extracted_rec
 
         inferred_filters, clean_query = parse_prose_constraints(primary_text) if primary_text else ({}, '')
         filters = dict(inferred_filters)
