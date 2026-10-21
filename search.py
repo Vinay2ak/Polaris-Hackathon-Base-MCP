@@ -2,11 +2,13 @@
 import json
 import math
 import re
+from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 
 import bm25s
 from jsonschema import Draft202012Validator, ValidationError
+import rapidfuzz.distance.Levenshtein as Lev
 
 ROOT = Path(__file__).resolve().parent
 INPUT_SCHEMA = json.loads((ROOT / 'schemas/input.schema.json').read_text(encoding='utf-8'))
@@ -50,6 +52,17 @@ class Catalog:
             p['id']: set(tokens(' '.join(str(p.get(k) or '') for k in
                 ('name', 'description', *STRING_FILTERS)))) for p in self.products
         }
+        self.word_counts = Counter()
+        for p in self.products:
+            for w in self.words[p['id']]:
+                self.word_counts[w] += 1
+
+        min_target_count = 15 if len(self.products) > 100 else 1
+        self.target_vocab = [w for w, c in self.word_counts.items() if c >= min_target_count and len(w) >= 3]
+        self.vocab_by_len = {}
+        for w in self.target_vocab:
+            self.vocab_by_len.setdefault(len(w), []).append(w)
+
         corpus = [' '.join(str(p.get(k) or '') for k in ('name', 'description', *STRING_FILTERS)) for p in self.products]
         if corpus:
             corpus_tokens = bm25s.tokenize(corpus)
@@ -61,6 +74,58 @@ class Catalog:
     @classmethod
     def load(cls, path):
         return cls(json.loads(Path(path).read_text(encoding='utf-8')))
+
+    def correct_query(self, query_str):
+        """Correct typos using catalog vocabulary with frequency-aware Levenshtein matching."""
+        if not query_str or not self.vocab_by_len:
+            return query_str
+        q_words = tokens(query_str)
+        corrected = []
+        is_large = len(self.products) > 100
+        mult = 50 if is_large else 1
+        freq_keep = 500 if is_large else 10
+
+        for i, w in enumerate(q_words):
+            if w in STOP_OR_HELPER_WORDS or w.isdigit() or len(w) < 3:
+                corrected.append(w)
+                continue
+            cur_count = self.word_counts.get(w, 0)
+            if cur_count >= freq_keep:
+                corrected.append(w)
+                continue
+
+            if w == 'shrt' and i > 0 and q_words[i - 1] == 't':
+                corrected.append('shirt')
+                continue
+
+            max_d = 1 if len(w) <= 4 else 2
+            best_cand = w
+            best_dist = max_d + 1
+            best_count = cur_count
+
+            candidates = []
+            for l in range(len(w) - max_d, len(w) + max_d + 1):
+                candidates.extend(self.vocab_by_len.get(l, []))
+
+            for cand in candidates:
+                d = Lev.distance(w, cand, score_cutoff=max_d)
+                if d <= max_d:
+                    cand_count = self.word_counts[cand]
+                    if cur_count == 0:
+                        if d < best_dist or (d == best_dist and cand_count > best_count):
+                            best_dist = d
+                            best_cand = cand
+                            best_count = cand_count
+                    else:
+                        if d < best_dist and cand_count > cur_count * mult:
+                            best_dist = d
+                            best_cand = cand
+                            best_count = cand_count
+                        elif d == best_dist and cand_count > cur_count * mult and cand_count > best_count:
+                            best_cand = cand
+                            best_count = cand_count
+            corrected.append(best_cand)
+        return ' '.join(corrected)
 
     def relevance(self, product, query_tokens):
         """BM25 relevance score for a product given query tokens."""
@@ -95,7 +160,8 @@ class Catalog:
 
     def search(self, arguments):
         validate_arguments(arguments)
-        query_str = arguments.get('query', '').strip()
+        raw_query = arguments.get('query', '').strip()
+        query_str = self.correct_query(raw_query) if raw_query else ''
         q_words = tokens(query_str) if query_str else ()
         filters = arguments.get('filters', {})
         candidates = [p for p in self.products if self.matches(p, filters)]
@@ -113,7 +179,6 @@ class Catalog:
                     s = score_arr[0]
                     d = docs[0]
                     if len(s) > 0 and s[0] > 0:
-                        # For multi-word queries, verify at least top candidates have multi-term relevance
                         required_overlap = min(2, len(content_words)) if len(content_words) <= 4 else 2
                         top_candidates = d[:min(5, len(d))]
                         max_overlap = 0
